@@ -29,11 +29,21 @@ const data = (state = [], action) => {
   }
 }
 
+const limit = (state = '', action) => {
+  switch (action.type) {
+    case 'LIMIT_CHANGE':
+      return action.limit
+    default:
+      return state
+  }
+}
+
 
 const rootReducer = combineReducers({
   data,
   filters,
-  loadingState
+  loadingState,
+  limit
 })
 
 export default rootReducer

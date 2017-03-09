@@ -2,12 +2,19 @@ import {getData} from '../helpers/api'
 
 export const textChange = (value, source) => {
 
-  if (!isNaN(value)) value = parseInt(value)
+  value = (!isNaN(value)) ? parseInt(value, 16) : value
 
   return {
     type: "TEXT_CHANGE",
     value,
     source
+  }
+}
+
+export const limitChange = (limit) => {
+  return {
+    type: "LIMIT_CHANGE",
+    limit
   }
 }
 
@@ -25,11 +32,11 @@ export const receiveData = (data) => {
   }
 }
 
-export const getRequest = (filters) => (dispatch) => {
+export const getRequest = (where, limit) => (dispatch) => {
   dispatch(setLoadingState(true))
-  return getData(filters)
+  dispatch(receiveData([]))
+  return getData(where, limit)
     .then(res => {
-      console.log(res)
       dispatch(receiveData(res.data))
       dispatch(setLoadingState(false))
     })

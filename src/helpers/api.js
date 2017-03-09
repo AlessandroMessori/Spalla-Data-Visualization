@@ -1,9 +1,11 @@
 export const baseApiUrl = 'http://localhost:4000'
 
-export const composeRequest = (query) => {
-  return `${baseApiUrl}/votazioni?params={"where":${JSON.stringify(query)}}`
+export const composeRequest = (where, limit) => {
+  limit = (limit) ? `&limit=${limit}` : ''
+  return `${baseApiUrl}/votazioni?where=${JSON.stringify(where)}${limit}`
 }
 
-export const getData = (query) => {
-  return fetch(composeRequest(query))
+export const getData = (where, limit) => {
+  return fetch(composeRequest(where, limit))
+    .then(res => res.json())
 }
