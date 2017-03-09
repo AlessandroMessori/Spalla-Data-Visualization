@@ -1,0 +1,5 @@
+@mixin addTransition($transitionType: all, $transitionDuration: 0.35s) {
+  -webkit-transition: $transitionType $transitionDuration;
+  -moz-transition: $transitionType $transitionDuration;
+  transition: $transitionType $transitionDuration;
+}
