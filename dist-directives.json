@@ -3,21 +3,5 @@
     "codeDeployBundle": {
       "source": "app/**"
     }
-  },
-  "deploy": {
-    "environments": {
-      "staging": {
-        "codeDeploy": {
-          "region": "eu-west-1",
-          "deploymentGroup": "staging"
-        }
-      },
-      "production": {
-        "codeDeploy": {
-          "region": "eu-west-1",
-          "deploymentGroup": "production"
-        }
-      }
-    }
   }
 }

@@ -7,7 +7,7 @@ const TopicSelector = (props) => {
         <section className="topicSelector col-md-6">
             <Link to={props.to}>
                 <h1>{props.title}</h1>
-                <img src={props.src}/>
+                <img src={props.src} alt={props.title}/>
             </Link>
         </section>
     );

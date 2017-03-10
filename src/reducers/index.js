@@ -1,5 +1,3 @@
-import {combineReducers} from 'redux'
-
 const filters = (state = {}, action) => {
   switch (action.type) {
     case 'TEXT_CHANGE':
@@ -39,11 +37,11 @@ const limit = (state = '', action) => {
 }
 
 
-const rootReducer = combineReducers({
+const rootReducer = {
   data,
   filters,
   loadingState,
   limit
-})
+}
 
 export default rootReducer
