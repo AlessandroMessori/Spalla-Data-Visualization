@@ -11,7 +11,6 @@ const ResultHeading = () => {
       <strong className="col-md-2">Voto</strong>
       <strong className="col-md-2">Classe</strong>
     </Panel>
-
   )
 }
 

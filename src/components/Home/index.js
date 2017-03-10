@@ -1,15 +1,18 @@
 import React from 'react'
-import {Link} from 'react-router'
-import {PageHeader, Image} from 'react-bootstrap'
-import pi from '../../assets/images/pi.jpg'
+import TopicSelector from '../TopicSelector/'
 import './home.scss'
 
-const Home = () => {
-  return (<section>
-    <PageHeader>Visualizzazione Valutazioni Docenti</PageHeader>
-    <Image className="home-image" src={pi}/>
-    <Link  className="home-link" to="test">Vai Alla Pagina Di Testing</Link>
-  </section>)
-}
+const HomePage = () => {
+  return (
+    <section className='home-page'>
+      <h1 className='page-header'>Votazioni Docenti Liceo Ariosto Spallanzani</h1>
+      <section className='topic-section row'>
+        <h2>Che dati vuoi vedere?</h2>
+        <TopicSelector title='Domande' src='images/question.png' to='cerca/domande'/>
+        <TopicSelector title='Docenti' src='images/teacher.png' to='cerca/docenti'/>
+      </section>
+    </section>
+  );
+};
 
-export default Home
+export default HomePage
