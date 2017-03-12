@@ -7,21 +7,17 @@ import Spinner from '../../components/Spinner'
 import {filterChange, clearFilters, loadInitialData} from '../../actions'
 import './searchPage.scss'
 
-const mapStateToProps = (state) => {
-  return {
-    filters: state.filters,
-    data: state.data,
-    loading: state.loadingState
-  }
-}
+const mapStateToProps = (state) => ({
+  filters: state.filters,
+  data: state.data,
+  loading: state.loadingState
+})
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    filterChange: (value, source) => dispatch(filterChange(value, source)),
-    clearFilters: () => dispatch(clearFilters()),
-    loadInitialData: () => dispatch(loadInitialData())
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  filterChange: (value, source) => dispatch(filterChange(value, source)),
+  clearFilters: () => dispatch(clearFilters()),
+  loadInitialData: () => dispatch(loadInitialData())
+})
 
 class Search extends React.Component {
 
@@ -36,18 +32,19 @@ class Search extends React.Component {
         this.props.loading && <Spinner/>
       }
       {
-        !this.props.loading && (<section>
-          <SearchBar value=''/>
-          <ClassSelector options={this.props.data[1]}/>
+        !this.props.loading &&
+        <section>
+          <SearchBar value='' onChange={this.props.filterChange}/>
+          <ClassSelector options={this.props.data[1]} defaultValue={this.props.filters.searchValue}
+                         value={this.props.filters.searchValue}/>
           <button className="btn btn-default" onClick={this.props.clearFilters}>Pulisci Filtri</button>
-          <SearchResult results={[this.props.data[0]]}/>
-        </section>)
+          <SearchResult results={this.props.data[0]}/>
+        </section>
       }
     </section>)
   }
 
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)
 

@@ -1,4 +1,4 @@
-const filters = (state = {}, action) => {
+const filters = (state = {search: '', cls: ''}, action) => {
   switch (action.type) {
     case 'FILTER_CHANGE':
       const oldState = state
@@ -20,7 +20,7 @@ const loadingState = (state = false, action) => {
   }
 }
 
-const data = (state = [], action) => {
+const data = (state = [[], []], action) => {
   switch (action.type) {
     case 'RECEIVE_DATA':
       return action.data
