@@ -10,9 +10,10 @@ const HomePage = () => {
         <h2>Che dati vuoi vedere?</h2>
         <TopicSelector title='Domande' src='images/question.png' to='cerca/domande'/>
         <TopicSelector title='Docenti' src='images/teacher.png' to='cerca/docenti'/>
+        <TopicSelector title='Classi' src='images/class.png' to='cerca/classi'/>
       </section>
     </section>
-  );
-};
+  )
+}
 
 export default HomePage

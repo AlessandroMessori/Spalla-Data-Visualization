@@ -1,43 +1,39 @@
-import {getData} from '../helpers/api'
+import {getInitialData} from '../helpers/api'
 
-export const textChange = (value, source) => {
-
-  value = (!isNaN(value)) ? parseInt(value, 16) : value
-
+export const filterChange = (value, source) => {
   return {
-    type: "TEXT_CHANGE",
+    type: 'FILTER_CHANGE',
     value,
     source
   }
 }
 
-export const limitChange = (limit) => {
+export const clearFilters = () => {
   return {
-    type: "LIMIT_CHANGE",
-    limit
+    type: 'CLEAR_FILTERS'
   }
 }
 
 export const setLoadingState = (state) => {
   return {
-    type: "SET_LOADING_STATE",
+    type: 'SET_LOADING_STATE',
     state
   }
 }
 
 export const receiveData = (data) => {
   return {
-    type: "RECEIVE_DATA",
+    type: 'RECEIVE_DATA',
     data
   }
 }
 
-export const getRequest = (where, limit) => (dispatch) => {
+export const loadInitialData = () => (dispatch) => {
   dispatch(setLoadingState(true))
   dispatch(receiveData([]))
-  return getData(where, limit)
+  return getInitialData()
     .then(res => {
-      dispatch(receiveData(res.data))
+      dispatch(receiveData(res))
       dispatch(setLoadingState(false))
     })
 }

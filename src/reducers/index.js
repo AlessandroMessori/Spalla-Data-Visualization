@@ -1,9 +1,11 @@
 const filters = (state = {}, action) => {
   switch (action.type) {
-    case 'TEXT_CHANGE':
+    case 'FILTER_CHANGE':
       const oldState = state
       oldState[action.source] = action.value
       return oldState
+    case 'CLEAR_FILTERS':
+      return state
     default:
       return state
   }
@@ -27,21 +29,10 @@ const data = (state = [], action) => {
   }
 }
 
-const limit = (state = '', action) => {
-  switch (action.type) {
-    case 'LIMIT_CHANGE':
-      return action.limit
-    default:
-      return state
-  }
-}
-
-
 const rootReducer = {
   data,
   filters,
-  loadingState,
-  limit
+  loadingState
 }
 
 export default rootReducer

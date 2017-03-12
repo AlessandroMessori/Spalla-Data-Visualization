@@ -1,0 +1,18 @@
+.searchPage {
+  text-align: center;
+
+  @mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+  }
+
+  select, .btn-default {
+    background-color: white;
+    margin-left: 2%;
+    height: 34px;
+    @include transform(translateY(-35%));
+  }
+}

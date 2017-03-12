@@ -1,7 +1,6 @@
 {
   "name": "spalla-data-visualization",
   "version": "0.1.0",
-  "private": true,
   "devDependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
@@ -58,6 +57,7 @@
   },
   "dependencies": {
     "express": "^4.14.0",
+    "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-bootstrap": "^0.30.7",
