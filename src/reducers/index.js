@@ -14,6 +14,15 @@ const filters = (state = {search: '', cls: ''}, action) => {
   }
 }
 
+const currentTeachers = (state = [], action) => {
+  switch (action.type) {
+    case 'FILTER_TEACHERS':
+      return action.filteredTeachers
+    default:
+      return state
+  }
+}
+
 const loadingState = (state = false, action) => {
   switch (action.type) {
     case 'SET_LOADING_STATE':
@@ -34,6 +43,7 @@ const data = (state = {teachers: [], cls: []}, action) => {
 
 const rootReducer = {
   data,
+  currentTeachers,
   filters,
   loadingState
 }

@@ -11,9 +11,8 @@ export default class ClassSelector extends React.Component {
 
   render() {
     return (
-      <FormControl componentClass="select" placeholder="select"
-                   defaultValue={this.props.defaultValue} value={this.props.value}
-                   onChange={this.props.onChange}>
+      <FormControl componentClass="select" defaultValue={this.props.defaultValue}
+                   value={this.props.value} onChange={this.props.onChange}>
         {this.getOptions(this.props.options)}
       </FormControl>)
   }
