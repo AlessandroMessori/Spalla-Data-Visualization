@@ -34,10 +34,13 @@ class Search extends React.Component {
       {
         !this.props.loading &&
         <section>
-          <SearchBar value='' onChange={this.props.filterChange}/>
-          <ClassSelector options={this.props.data[1]} defaultValue={this.props.filters.searchValue}
-                         value={this.props.filters.searchValue}/>
-          <button className="btn btn-default" onClick={this.props.clearFilters}>Pulisci Filtri</button>
+          <SearchBar value={this.props.filters.change}
+                     onChange={(event) => this.props.filterChange(event.target.value, 'search')}/>
+          <ClassSelector options={this.props.data[1]} defaultValue={this.props.filters.cls}
+                         value={this.props.filters.cls}
+                         onChange={(event) => this.props.filterChange(event.target.value, 'cls')}/>
+          <button className="btn btn-default" onClick={this.props.clearFilters}>Pulisci Filtri
+          </button>
           <SearchResult results={this.props.data[0]}/>
         </section>
       }
