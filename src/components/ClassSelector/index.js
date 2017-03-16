@@ -1,4 +1,5 @@
 import React from 'react'
+import {FormControl} from 'react-bootstrap'
 import './classSelector.scss'
 
 export default class ClassSelector extends React.Component {
@@ -10,9 +11,11 @@ export default class ClassSelector extends React.Component {
 
   render() {
     return (
-      <select defaultValue={this.props.defaultValue} value={this.props.value} onChange={this.props.onChange}>
+      <FormControl componentClass="select" placeholder="select"
+                   defaultValue={this.props.defaultValue} value={this.props.value}
+                   onChange={this.props.onChange}>
         {this.getOptions(this.props.options)}
-      </select>)
+      </FormControl>)
   }
 
   getOptions(data) {

@@ -1,11 +1,14 @@
-const filters = (state = {search: '', cls: {}}, action) => {
+const filters = (state = {search: '', cls: ''}, action) => {
   switch (action.type) {
     case 'FILTER_CHANGE':
-      const oldState = state
-      oldState[action.source] = action.value
-      return oldState
+      const change = {}
+      change[action.source] = action.value
+      return {
+        ...state,
+        ...change
+      }
     case 'CLEAR_FILTERS':
-      return {search: '', cls: {}}
+      return {search: '', cls: ''}
     default:
       return state
   }
