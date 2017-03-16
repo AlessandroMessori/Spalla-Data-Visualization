@@ -37,12 +37,12 @@ class Search extends React.Component {
         <section>
           <SearchBar value={this.props.filters.search}
                      onChange={(event) => this.props.filterChange(event.target.value, 'search')}/>
-          <ClassSelector options={this.props.data[1]} defaultValue={this.props.filters.cls}
+          <ClassSelector options={this.props.data.cls} defaultValue={this.props.filters.cls}
                          value={this.props.filters.cls}
                          onChange={(event) => this.props.filterChange(event.target.value, 'cls')}/>
           <Button onClick={this.props.clearFilters}>Pulisci Filtri
           </Button>
-          <SearchResult results={this.props.data[0]}/>
+          <SearchResult results={this.props.data.teachers}/>
         </section>
       }
     </section>)

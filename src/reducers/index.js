@@ -23,7 +23,7 @@ const loadingState = (state = false, action) => {
   }
 }
 
-const data = (state = [[], []], action) => {
+const data = (state = {teachers: [], cls: []}, action) => {
   switch (action.type) {
     case 'RECEIVE_DATA':
       return action.data

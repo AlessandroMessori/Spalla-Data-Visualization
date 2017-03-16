@@ -16,3 +16,10 @@ export const getInitialData = () => {
     fetch(`${baseApiUrl}/classi`).then(res => res.json())
   ])
 }
+
+export const normalizeData = (arr) => {
+  return {
+    'teachers': arr[0],
+    'cls': arr[1]
+  }
+}

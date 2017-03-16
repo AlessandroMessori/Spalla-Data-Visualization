@@ -1,4 +1,4 @@
-import {getInitialData} from '../helpers/api'
+import {getInitialData, normalizeData} from '../helpers/api'
 
 export const filterChange = (value, source) => {
   return {
@@ -33,7 +33,7 @@ export const loadInitialData = () => (dispatch) => {
   dispatch(receiveData([]))
   return getInitialData()
     .then(res => {
-      dispatch(receiveData(res))
+      dispatch(receiveData(normalizeData(res)))
       dispatch(setLoadingState(false))
     })
 }

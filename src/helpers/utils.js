@@ -10,4 +10,3 @@ export const filterTeachersByString = (arr, string) => {
 
   return results
 }
-
