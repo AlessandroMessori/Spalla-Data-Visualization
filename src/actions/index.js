@@ -1,4 +1,5 @@
 import {getInitialData, normalizeData} from '../helpers/api'
+import {filterTeachersByString} from '../helpers/utils'
 
 //filter actions
 export const filterChange = (value, source) => ({
@@ -13,7 +14,9 @@ export const clearFilters = () => ({
 
 export const filterTeachers = (filters, teachers) => {
 
-  const filteredTeachers = teachers
+  const {search, cls} = filters
+  let filteredTeachers = (search) ? filterTeachersByString(teachers, search) : teachers
+  //filteredTeachers = filteredTeachers
 
   return {
     type: 'FILTER_TEACHERS',
