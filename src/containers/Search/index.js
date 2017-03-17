@@ -5,19 +5,20 @@ import SearchBar from '../../components/SearchBar/'
 import ClassSelector from '../../components/ClassSelector/'
 import SearchResult from '../../components/SearchResult'
 import Spinner from '../../components/Spinner'
-import {loadInitialData, updateFilters, resetFilters} from '../../actions'
+import {loadInitialData, filterChange, clearFilters} from '../../actions'
+import {getCurrentTeachers} from '../../selectors'
 import './searchPage.scss'
 
 const mapStateToProps = (state) => ({
   filters: state.filters,
   data: state.data,
   loading: state.loadingState,
-  currentTeachers: state.currentTeachers
+  currentTeachers: getCurrentTeachers(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateFilters: (filters, value, source, teachers) => dispatch(updateFilters(filters, value, source, teachers)),
-  resetFilters: (teachers) => dispatch(resetFilters(teachers)),
+  filterChange: (value, source) => dispatch(filterChange(value, source)),
+  clearFilters: () => dispatch(clearFilters()),
   loadInitialData: () => dispatch(loadInitialData())
 })
 
@@ -35,11 +36,11 @@ class Search extends React.Component {
         !this.props.loading &&
         <section>
           <SearchBar value={this.props.filters.search}
-                     onChange={(event) => this.props.updateFilters(this.props.filters, event.target.value, 'search', this.props.data.teachers)}/>
+                     onChange={(event) => this.props.filterChange(event.target.value, 'search')}/>
           <ClassSelector options={this.props.data.cls} defaultValue={this.props.filters.cls}
                          value={this.props.filters.cls}
-                         onChange={(event) => this.props.updateFilters(this.props.filters, event.target.value, 'cls', this.props.data.teachers)}/>
-          <Button onClick={() => this.props.resetFilters(this.props.data.teachers)}>Pulisci Filtri
+                         onChange={(event) => this.props.filterChange(event.target.value, 'cls')}/>
+          <Button onClick={this.props.clearFilters}>Pulisci Filtri
           </Button>
           <SearchResult results={this.props.currentTeachers}/>
         </section>

@@ -1,5 +1,4 @@
 import {getInitialData, normalizeData} from '../helpers/api'
-import {filterTeachersByString} from '../helpers/utils'
 
 //filter actions
 export const filterChange = (value, source) => ({
@@ -11,30 +10,6 @@ export const filterChange = (value, source) => ({
 export const clearFilters = () => ({
   type: 'CLEAR_FILTERS'
 })
-
-export const filterTeachers = (filters, teachers) => {
-
-  const {search, cls} = filters
-  let filteredTeachers = (search) ? filterTeachersByString(teachers, search) : teachers
-  //filteredTeachers = filteredTeachers
-
-  return {
-    type: 'FILTER_TEACHERS',
-    filteredTeachers
-  }
-
-}
-
-//filter thunks
-export const updateFilters = (filters, value, source, teachers) => (dispatch) => {
-  dispatch(filterChange(value, source))
-  dispatch(filterTeachers(filters, teachers))
-}
-
-export const resetFilters = (teachers) => (dispatch) => {
-  dispatch(clearFilters())
-  dispatch(filterTeachers({}, teachers))
-}
 
 
 //api actions
@@ -48,6 +23,7 @@ export const receiveData = (data) => ({
   data
 })
 
+
 //api thunks
 export const loadInitialData = () => (dispatch) => {
   dispatch(setLoadingState(true))
@@ -55,7 +31,6 @@ export const loadInitialData = () => (dispatch) => {
   return getInitialData()
     .then(res => {
       const data = normalizeData(res)
-      dispatch(filterTeachers({}, data.teachers))
       dispatch(receiveData(data))
       dispatch(setLoadingState(false))
     })
