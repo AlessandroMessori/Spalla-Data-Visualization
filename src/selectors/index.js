@@ -1,11 +1,17 @@
+import {createSelector} from 'reselect'
 import {filterTeachersByString} from '../helpers/utils'
 
-export const getCurrentTeachers = (state) => {
-  let {teachers} = state.data
-  let {search, cls} = state
+const teachers = (state) => state.data.teachers
+const search = (state) => state.filters.search
+const cls = (state) => state.filters.cls
 
-  teachers = (search) ? (filterTeachersByString(teachers, search)) : teachers
-  teachers = (cls) ? teachers : teachers
+export const currentTeachers = createSelector(
+  teachers,
+  search,
+  cls,
+  (teachers, search, cls) => filterTeachersByString(teachers, search)
+)
 
-  return teachers
-}
+
+
+
