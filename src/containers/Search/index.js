@@ -5,18 +5,19 @@ import SearchBar from '../../components/SearchBar/'
 import ClassSelector from '../../components/ClassSelector/'
 import SearchResult from '../../components/SearchResult'
 import Spinner from '../../components/Spinner'
-import {filterChange, clearFilters, loadInitialData} from '../../actions'
+import {loadInitialData, updateFilters, resetFilters} from '../../actions'
 import './searchPage.scss'
 
 const mapStateToProps = (state) => ({
   filters: state.filters,
   data: state.data,
-  loading: state.loadingState
+  loading: state.loadingState,
+  currentTeachers: state.currentTeachers
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  filterChange: (value, source) => dispatch(filterChange(value, source)),
-  clearFilters: () => dispatch(clearFilters()),
+  updateFilters: (filters, value, source, teachers) => dispatch(updateFilters(filters, value, source, teachers)),
+  resetFilters: (teachers) => dispatch(resetFilters(teachers)),
   loadInitialData: () => dispatch(loadInitialData())
 })
 
@@ -29,18 +30,16 @@ class Search extends React.Component {
   render() {
     return (<section className="searchPage">
       <h1 className="page-header">Cerca {this.props.params.type}</h1>
-      {
-        this.props.loading && <Spinner/>
-      }
+      {this.props.loading && <Spinner/>}
       {
         !this.props.loading &&
         <section>
           <SearchBar value={this.props.filters.search}
-                     onChange={(event) => this.props.filterChange(event.target.value, 'search')}/>
+                     onChange={(event) => this.props.updateFilters(this.props.filters, event.target.value, 'search', this.props.currentTeachers)}/>
           <ClassSelector options={this.props.data.cls} defaultValue={this.props.filters.cls}
                          value={this.props.filters.cls}
-                         onChange={(event) => this.props.filterChange(event.target.value, 'cls')}/>
-          <Button onClick={this.props.clearFilters}>Pulisci Filtri
+                         onChange={(event) => this.props.updateFilters(this.props.filters, event.target.value, 'cls', this.props.currentTeachers)}/>
+          <Button onClick={() => this.props.resetFilters(this.props.currentTeachers)}>Pulisci Filtri
           </Button>
           <SearchResult results={this.props.data.teachers}/>
         </section>

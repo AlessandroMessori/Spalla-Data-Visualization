@@ -23,14 +23,14 @@ export const filterTeachers = (filters, teachers) => {
 }
 
 //filter thunks
-export const updateFilters = (value, source, teachers) => (dispatch) => {
+export const updateFilters = (filters, value, source, teachers) => (dispatch) => {
   dispatch(filterChange(value, source))
   dispatch(filterTeachers(filters, teachers))
 }
 
-export const resetFilters = (value, source, teachers) => (dispatch) => {
-  dispatch(clearFilters(value, source))
-  dispatch(filterTeachers(filters, teachers))
+export const resetFilters = (teachers) => (dispatch) => {
+  dispatch(clearFilters())
+  dispatch(filterTeachers({}, teachers))
 }
 
 
@@ -52,7 +52,7 @@ export const loadInitialData = () => (dispatch) => {
   return getInitialData()
     .then(res => {
       const data = normalizeData(res)
-      dispatch(filterTeachers(data.teachers))
+      dispatch(filterTeachers({}, data.teachers))
       dispatch(receiveData(data))
       dispatch(setLoadingState(false))
     })
