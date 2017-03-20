@@ -25,7 +25,16 @@ const loadingState = (state = false, action) => {
 
 const data = (state = {teachers: [], cls: []}, action) => {
   switch (action.type) {
-    case 'RECEIVE_DATA':
+    case 'RECEIVE_INITIAL_DATA':
+      return action.data
+    default:
+      return state
+  }
+}
+
+const teacherData = (state = {}, action) => {
+  switch (action.type) {
+    case 'RECEIVE_TEACHER_DATA':
       return action.data
     default:
       return state
@@ -35,7 +44,8 @@ const data = (state = {teachers: [], cls: []}, action) => {
 const rootReducer = {
   data,
   filters,
-  loadingState
+  loadingState,
+  teacherData
 }
 
 export default rootReducer
