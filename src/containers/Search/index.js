@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Button} from 'react-bootstrap'
+import {PageHeader, Button} from 'react-bootstrap'
 import SearchBar from '../../components/SearchBar/'
 import ClassSelector from '../../components/ClassSelector/'
 import SearchResult from '../../components/SearchResult'
@@ -34,7 +34,7 @@ class Search extends React.Component {
     const {filterChange, clearFilters} = this.props
 
     return (<section className="searchPage">
-      <h1 className="page-header">Cerca {this.props.params.type}</h1>
+      <PageHeader>Cerca {this.props.params.type}</PageHeader>
       {loading && <Spinner/>}
       {
         !loading &&
