@@ -19,6 +19,17 @@ export const getVotiGenerali = (idDomanda, idClasse) => {
     .then(res => res.json())
 }
 
+export const getAvg = (votes) => {
+  let averages = [{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},
+    {count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0}]
+  votes.map(vote => {
+    averages[vote.idDomanda].count++
+    averages[vote.idDomanda].total += vote.voto
+  })
+  averages.map(item => item.avg = item.sum / item.count)
+  return averages
+}
+
 export const getStats = (votazioni) => {
   let min = 666;
   let max = -666;
@@ -29,7 +40,7 @@ export const getStats = (votazioni) => {
   for (let i = 0; i < l; i++) {
     const singolaVotazione = votazioni[i];
     const voto = singolaVotazione.voto;
-    if (voto === 0) {
+    if (voto === -1) {
       na++;
     } else {
       if (voto < min) min = voto;
@@ -38,7 +49,7 @@ export const getStats = (votazioni) => {
       votanti++;
     }
   }
-
+  console.log(getAvg(votazioni))
   return {
     min,
     max,
