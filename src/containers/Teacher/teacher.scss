@@ -1,13 +1,21 @@
 .teacherSection {
   h2 {
     display: inline;
-    margin: 1% 3%;
+    margin: 3%;
+  }
+
+
+  .selector{
+    margin: 2%;
   }
 
   .dataTable {
     width: 60%;
-    margin-top: 3%;
     margin-left: 20%;
+
+    table {
+      margin-bottom: 0.5px;
+    }
 
     td {
       min-width: 50%;
