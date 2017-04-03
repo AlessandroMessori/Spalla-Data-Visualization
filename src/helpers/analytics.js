@@ -20,13 +20,18 @@ export const getVotiGenerali = (idDomanda, idClasse) => {
 }
 
 export const getAvg = (votes) => {
-  let averages = [{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},
-    {count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0},{count:0,total:0}, {count:0,total:0}]
+  let averages = []
+  for (let i = 0; i <= 12; i++) averages.push({count: 0, total: 0})
   votes.map(vote => {
     averages[vote.idDomanda].count++
     averages[vote.idDomanda].total += vote.voto
+    averages[vote.idDomanda].idDomanda = vote.idDomanda
+    return vote
   })
-  averages.map(item => item.avg = item.sum / item.count)
+  averages.map(item => {
+    item.avg = parseFloat((item.total / item.count).toFixed(2))
+    return item
+  })
   return averages
 }
 
@@ -36,10 +41,13 @@ export const getStats = (votazioni) => {
   let sum = 0;
   let votanti = 0;
   let na = 0;
-  const l = votazioni.length;
+  let averages = getAvg(votazioni)
+  averages.splice(0, 1)
+  const l = averages.length;
+
   for (let i = 0; i < l; i++) {
-    const singolaVotazione = votazioni[i];
-    const voto = singolaVotazione.voto;
+    const singolaVotazione = averages[i];
+    const voto = singolaVotazione.avg;
     if (voto === -1) {
       na++;
     } else {
@@ -49,11 +57,12 @@ export const getStats = (votazioni) => {
       votanti++;
     }
   }
-  console.log(getAvg(votazioni))
+
   return {
     min,
     max,
     avg: sum / votanti,
+    averages,
     votanti,
     na
   }

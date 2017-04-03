@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {PageHeader} from 'react-bootstrap'
-import {BootstrapTable,TableHeaderColumn} from 'react-bootstrap-table'
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import Spinner from '../../components/Spinner'
 import {loadTeacherData} from '../../actions'
 import './teacher.scss'
@@ -23,8 +23,7 @@ class Teacher extends React.Component {
 
   render() {
     const {loading, teacherData} = this.props
-    const {votazioni} = teacherData
-    console.log(votazioni)
+    let averages = (teacherData.stats) ? teacherData.stats.averages : []
     return (<section className="teacherSection">
       <PageHeader>{this.props.params.name}</PageHeader>
       {loading && <Spinner/>}
@@ -32,15 +31,17 @@ class Teacher extends React.Component {
         !loading && teacherData.stats &&
         <section>
           <section>
-            <h2>Voto Minimo: {teacherData.stats.min}</h2>
-            <h2>Voto Massimo: {teacherData.stats.max}</h2>
-            <h2>Media Voti: {teacherData.stats.avg.toFixed(2)}</h2>
+            <h2>Media Minima: {teacherData.stats.min}</h2>
+            <h2>Media Massima: {teacherData.stats.max}</h2>
+            <h2>Media Totale: {teacherData.stats.avg.toFixed(2)}</h2>
           </section>
-          <BootstrapTable data={votazioni} striped={true} hover={true}>
-            <TableHeaderColumn dataField="idDomanda" isKey={true} dataAlign="center" dataSort={true}>ID Domanda</TableHeaderColumn>
-            <TableHeaderColumn dataField="voto" dataSort={true}>Voto</TableHeaderColumn>
-         </BootstrapTable>
-       </section>
+          <BootstrapTable className='dataTable' data={averages} striped={true} hover={true}>
+            <TableHeaderColumn dataField="idDomanda" isKey={true} dataAlign="center" dataSort={true}>ID
+              Domanda</TableHeaderColumn>
+            <TableHeaderColumn dataField="avg" dataAlign="center" dataSort={true}>Media
+              Voti</TableHeaderColumn>
+          </BootstrapTable>
+        </section>
       }
     </section>)
   }
