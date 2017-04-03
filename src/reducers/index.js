@@ -14,6 +14,15 @@ const filters = (state = {search: '', cls: ''}, action) => {
   }
 }
 
+const visualType = (state = 'chart', action) => {
+  switch (action.type) {
+    case 'SET_VISUAL_TYPE':
+      return action.visual
+    default:
+      return state
+  }
+}
+
 const loadingState = (state = false, action) => {
   switch (action.type) {
     case 'SET_LOADING_STATE':
@@ -45,7 +54,8 @@ const rootReducer = {
   data,
   filters,
   loadingState,
-  teacherData
+  teacherData,
+  visualType
 }
 
 export default rootReducer

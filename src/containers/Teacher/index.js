@@ -4,16 +4,18 @@ import {PageHeader, ButtonGroup, Button} from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import {Bar} from 'react-chartjs'
 import Spinner from '../../components/Spinner'
-import {loadTeacherData} from '../../actions'
+import {loadTeacherData, changeVisualType} from '../../actions'
 import './teacher.scss'
 
 const mapStateToProps = (state) => ({
   loading: state.loadingState,
-  teacherData: state.teacherData
+  teacherData: state.teacherData,
+  visualType: state.visualType
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadTeacherData: (id) => dispatch(loadTeacherData(id))
+  loadTeacherData: (id) => dispatch(loadTeacherData(id)),
+  changeVisualType: (visual) => dispatch(changeVisualType(visual))
 })
 
 class Teacher extends React.Component {
@@ -31,9 +33,9 @@ class Teacher extends React.Component {
         label: '# of Votes',
         data: data,
         backgroundColor: [
-          'red',
+          '#ff6384',
           'rgba(54, 162, 235, 0.2)',
-          'yellow',
+          'rgba(75, 192, 192, 0.2)',
           'rgba(75, 192, 192, 0.2)',
           'rgba(153, 102, 255, 0.2)',
           'rgba(255, 159, 64, 0.2)',
@@ -44,21 +46,13 @@ class Teacher extends React.Component {
           'rgba(153, 102, 255, 0.2)',
           'rgba(255, 159, 64, 0.2)'
         ],
-        borderColor: [
-          'rgba(255,99,132,1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
         borderWidth: 1
       }]
     })
   }
 
   render() {
-    const {loading, teacherData} = this.props
+    const {loading, teacherData, visualType} = this.props
     let averages = (teacherData.stats) ? teacherData.stats.averages : []
     return (<section className="teacherSection">
       <PageHeader>{this.props.params.name}</PageHeader>
@@ -72,17 +66,19 @@ class Teacher extends React.Component {
             <h2>Media Totale: {teacherData.stats.avg.toFixed(2)}</h2>
           </section>
           <ButtonGroup className='selector'>
-            <Button>Grafico</Button>
-            <Button>Tabella</Button>
+            <Button active={visualType === 'chart'}
+                    onClick={() => this.props.changeVisualType('chart')}>Grafico</Button>
+            <Button active={visualType === 'table'}
+                    onClick={() => this.props.changeVisualType('table')}>Tabella</Button>
           </ButtonGroup>
           <br/>
-          <Bar data={this.getBarData()} width='600' height='400'/>
-          <BootstrapTable className='dataTable' data={averages} striped={true} hover={true}>
+          {visualType === 'chart' && <Bar data={this.getBarData()} width='700' height='400'/>}
+          {visualType === 'table' && <BootstrapTable className='dataTable' data={averages} hover={true}>
             <TableHeaderColumn dataField="idDomanda" isKey={true} dataAlign="center" dataSort={true}>ID
               Domanda</TableHeaderColumn>
             <TableHeaderColumn dataField="avg" dataAlign="center" dataSort={true}>Media
               Voti</TableHeaderColumn>
-          </BootstrapTable>
+          </BootstrapTable>}
         </section>
       }
     </section>)

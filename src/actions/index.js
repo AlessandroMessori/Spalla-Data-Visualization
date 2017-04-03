@@ -12,6 +12,11 @@ export const clearFilters = () => ({
   type: 'CLEAR_FILTERS'
 })
 
+export const changeVisualType = (visual) => ({
+  type: 'SET_VISUAL_TYPE',
+  visual
+})
+
 
 //api actions
 export const setLoadingState = (state) => ({
