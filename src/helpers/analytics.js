@@ -21,15 +21,17 @@ export const getVotiGenerali = (idDomanda, idClasse) => {
 
 export const getAvg = (votes) => {
   let averages = []
-  for (let i = 0; i <= 12; i++) averages.push({count: 0, total: 0})
+  for (let i = 0; i <= 12; i++) averages.push({count: 0, total: 0, goodVoteCount: 0,})
   votes.map(vote => {
     averages[vote.idDomanda].count++
     averages[vote.idDomanda].total += vote.voto
     averages[vote.idDomanda].idDomanda = vote.idDomanda
+    if (vote.voto > 3) averages[vote.idDomanda].goodVoteCount++
     return vote
   })
   averages.map(item => {
     item.avg = parseFloat((item.total / item.count).toFixed(2))
+    item.goodVotePercentage = parseFloat((item.goodVoteCount / item.count * 100).toFixed(2))
     return item
   })
   return averages
@@ -47,7 +49,7 @@ export const getStats = (votazioni) => {
 
   for (let i = 0; i < l; i++) {
     const singolaVotazione = averages[i];
-    const voto = singolaVotazione.avg;
+    const voto = singolaVotazione.goodVotePercentage;
     if (voto === -1) {
       na++;
     } else {
