@@ -13,13 +13,15 @@ export const getData = (where, limit) => {
 export const getInitialData = () => {
   return Promise.all([
     fetch(`${baseApiUrl}/docenti`).then(res => res.json()),
-    fetch(`${baseApiUrl}/classi`).then(res => res.json())
+    fetch(`${baseApiUrl}/classi`).then(res => res.json()),
+    fetch(`${baseApiUrl}/domande`).then(res => res.json())
   ])
 }
 
 export const normalizeData = (arr) => {
   return {
     'teachers': arr[0],
-    'cls': arr[1]
+    'cls': arr[1],
+    'questions': arr[2].map(item => item.testo).splice(0, 12)
   }
 }

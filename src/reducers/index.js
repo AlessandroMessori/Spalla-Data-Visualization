@@ -32,7 +32,7 @@ const loadingState = (state = false, action) => {
   }
 }
 
-const data = (state = {teachers: [], cls: []}, action) => {
+const data = (state = {teachers: [], cls: [], questions: []}, action) => {
   switch (action.type) {
     case 'RECEIVE_INITIAL_DATA':
       return action.data

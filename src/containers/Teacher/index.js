@@ -10,7 +10,8 @@ import './teacher.scss'
 const mapStateToProps = (state) => ({
   loading: state.loadingState,
   teacherData: state.teacherData,
-  visualType: state.visualType
+  visualType: state.visualType,
+  questions: state.data.questions
 })
 
 const mapDispatchToProps = (dispatch) => ({

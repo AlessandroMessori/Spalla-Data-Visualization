@@ -5,7 +5,7 @@ import SearchBar from '../../components/SearchBar/'
 import ClassSelector from '../../components/ClassSelector/'
 import SearchResult from '../../components/SearchResult'
 import Spinner from '../../components/Spinner'
-import {loadInitialData, filterChange, clearFilters} from '../../actions'
+import {filterChange, clearFilters} from '../../actions'
 import {currentTeachers} from '../../selectors'
 import './searchPage.scss'
 
@@ -18,15 +18,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   filterChange: (value, source) => dispatch(filterChange(value, source)),
-  clearFilters: () => dispatch(clearFilters()),
-  loadInitialData: () => dispatch(loadInitialData())
+  clearFilters: () => dispatch(clearFilters())
 })
 
 class Search extends React.Component {
 
-  componentDidMount() {
-    this.props.loadInitialData()
-  }
 
   render() {
 
