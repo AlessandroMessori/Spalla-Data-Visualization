@@ -11,7 +11,8 @@ const mapStateToProps = (state) => ({
   loading: state.loadingState,
   teacherData: state.teacherData,
   visualType: state.visualType,
-  questions: state.data.questions
+  questions: state.data.questions,
+  schoolData: state.data.goodVotes
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -28,33 +29,43 @@ class Teacher extends React.Component {
   getBarData() {
     const {averages} = this.props.teacherData.stats
     const data = averages.map(item => item.goodVotePercentage)
+    const schoolAvg = (this.props.schoolData) ? this.props.schoolData.splice(0, 12) : []
     return ({
       labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-      datasets: [{
-        label: '# of Votes',
-        data: data,
-        backgroundColor: [
-          '#ff6384',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          label: '# of Votes',
+          data: data,
+          fillColor: "red",
+          borderWidth: 1
+        },
+        {
+          label: '# of Votes',
+          data: schoolAvg,
+          fillColor: "blue",
+          borderWidth: 1
+        }
+      ]
     })
   }
 
   render() {
-    const {loading, teacherData, visualType} = this.props
+    const {loading, teacherData, visualType, schoolData} = this.props
     let averages = (teacherData.stats) ? teacherData.stats.averages : []
+    const data = averages.map((item, i) => {
+      if (schoolData) {
+        console.log('ciaone')
+        return {
+          idDomanda: item.idDomanda,
+          schoolPercentage: schoolData[i] + '%',
+          difference: (item.goodVotePercentage - schoolData[i]).toFixed(2) + '%',
+          goodVotePercentage: item.goodVotePercentage + '%',
+        }
+      }
+
+      return item
+    })
+
     return (<section className="teacherSection">
       <PageHeader>{this.props.params.name}</PageHeader>
       {loading && <Spinner/>}
@@ -75,11 +86,15 @@ class Teacher extends React.Component {
           <br/>
           {visualType === 'chart' &&
           <Bar data={this.getBarData()} width='700' height='400'/>}
-          {visualType === 'table' && <BootstrapTable className='dataTable' data={averages} hover={true}>
+          {visualType === 'table' && <BootstrapTable className='dataTable' data={data} hover={true}>
             <TableHeaderColumn dataField="idDomanda" isKey={true} dataAlign="center" dataSort={true}>ID
               Domanda</TableHeaderColumn>
             <TableHeaderColumn dataField="goodVotePercentage" dataAlign="center" dataSort={true}>Valore Voti
               Positivi</TableHeaderColumn>
+            <TableHeaderColumn dataField="schoolPercentage" dataAlign="center" dataSort={true}>Media della
+              Scuola</TableHeaderColumn>
+            <TableHeaderColumn dataField="difference" dataAlign="center" dataSort={true}>Delta Docente
+              Scuola</TableHeaderColumn>
           </BootstrapTable>}
         </section>
       }

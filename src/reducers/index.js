@@ -14,7 +14,7 @@ const filters = (state = {search: '', cls: ''}, action) => {
   }
 }
 
-const visualType = (state = 'chart', action) => {
+const visualType = (state = 'table', action) => {
   switch (action.type) {
     case 'SET_VISUAL_TYPE':
       return action.visual

@@ -11,3 +11,5 @@ export const filterTeachersByString = (arr, string) => {
 
   return results
 }
+
+export const filterTeachersByCategory = (arr, category) => arr.filter(item => item.tipo_materia === category)

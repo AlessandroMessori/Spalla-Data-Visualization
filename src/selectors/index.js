@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect'
-import {filterTeachersByString} from '../helpers/utils'
+import {filterTeachersByString, filterTeachersByCategory} from '../helpers/utils'
 
 const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
@@ -9,7 +9,7 @@ export const currentTeachers = createSelector(
   teachers,
   search,
   cls,
-  (teachers, search, cls) => filterTeachersByString(teachers, search)
+  (teachers, search, cls) => cls ? filterTeachersByCategory(filterTeachersByString(teachers, search), cls) : filterTeachersByString(teachers, search)
 )
 
 

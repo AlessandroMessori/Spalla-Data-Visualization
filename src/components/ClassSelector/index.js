@@ -19,7 +19,7 @@ export default class ClassSelector extends React.Component {
 
   getOptions(data) {
     let options = []
-    data.map(item => options.push(<option key={item.id} value={item.id}>{item.label}</option>))
+    data.map(item => options.push(<option key={item} value={item}>{item}</option>))
     return options
   }
 

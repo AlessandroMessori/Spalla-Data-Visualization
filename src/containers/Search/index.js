@@ -28,7 +28,7 @@ class Search extends React.Component {
 
     const {currentTeachers, loading, filters, data}  = this.props
     const {filterChange, clearFilters} = this.props
-
+    const categories = (data.teachers) ? Array.from(new Set(data.teachers.map(item => item.tipo_materia))) : []
     return (<section className="searchPage">
       <PageHeader>Cerca {this.props.params.type}</PageHeader>
       {loading && <Spinner/>}
@@ -37,8 +37,7 @@ class Search extends React.Component {
         <section>
           <SearchBar value={filters.search}
                      onChange={(event) => filterChange(event.target.value, 'search')}/>
-          <ClassSelector options={data.cls} defaultValue={filters.cls}
-                         value={filters.cls}
+          <ClassSelector options={categories} value={filters.cls}
                          onChange={(event) => filterChange(event.target.value, 'cls')}/>
           <Button onClick={clearFilters}>Pulisci Filtri
           </Button>
