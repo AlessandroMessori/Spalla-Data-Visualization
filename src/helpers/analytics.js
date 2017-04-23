@@ -4,10 +4,10 @@ export const getVotesPercentage = (votes, minVote) => {
 
   votes.map((question, i) => {
 
-    percentages.push({goodVotesCount: 0, percentage: 0})
+    percentages.push({goodVotesCount: 0})
 
-    Object.keys(question.votazione).map(item => {
-      const {value, count} = question.votazione[item]
+    question.countVal.map(item => {
+      const {value, count} = item
       if (value >= minVote) percentages[i].goodVotesCount += count
       return null
     })
