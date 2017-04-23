@@ -1,5 +1,5 @@
 import {getInitialData, normalizeData} from '../helpers/api'
-import {getVotiDocenti, getStats} from '../helpers/analytics'
+import {getVotesPercentage} from '../helpers/analytics'
 
 //filter actions
 export const filterChange = (value, source) => ({
@@ -29,11 +29,6 @@ export const receiveInitialData = (data) => ({
   data
 })
 
-export const receiveTeacherData = (data) => ({
-  type: 'RECEIVE_TEACHER_DATA',
-  data
-})
-
 
 //api thunks
 export const loadInitialData = () => (dispatch) => {
@@ -42,20 +37,11 @@ export const loadInitialData = () => (dispatch) => {
   return getInitialData()
     .then(res => {
       const data = normalizeData(res)
+      getVotesPercentage(data.schoolVotes, 3)
       dispatch(receiveInitialData(data))
       dispatch(setLoadingState(false))
     })
 }
 
-export const loadTeacherData = (id) => (dispatch) => {
-  dispatch(setLoadingState(true))
-  dispatch(receiveTeacherData({}))
-  return getVotiDocenti(id)
-    .then(data => {
-      const stats = getStats(data.data);
-      const teacherData = {stats, votazioni: data.data, count: data.count}
-      dispatch(receiveTeacherData(teacherData))
-      dispatch(setLoadingState(false))
-    })
-}
+
 

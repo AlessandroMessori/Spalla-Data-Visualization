@@ -41,20 +41,10 @@ const data = (state = {teachers: [], cls: [], questions: []}, action) => {
   }
 }
 
-const teacherData = (state = {}, action) => {
-  switch (action.type) {
-    case 'RECEIVE_TEACHER_DATA':
-      return action.data
-    default:
-      return state
-  }
-}
-
 const rootReducer = {
   data,
   filters,
   loadingState,
-  teacherData,
   visualType
 }
 
