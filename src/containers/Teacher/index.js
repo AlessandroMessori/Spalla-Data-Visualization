@@ -4,7 +4,7 @@ import {PageHeader, ButtonGroup, Button} from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import {Bar} from 'react-chartjs'
 import Spinner from '../../components/Spinner'
-import {loadTeacherData, changeVisualType} from '../../actions'
+import {changeVisualType} from '../../actions'
 import {tableData, barData} from '../../selectors'
 import './teacher.scss'
 
@@ -13,36 +13,31 @@ const mapStateToProps = (state) => ({
   teacherData: state.teacherData,
   visualType: state.visualType,
   questions: state.data.questions,
-  schoolData: state.data.goodVotes,
+  //schoolData: state.data.goodVotes,
   tableData: tableData(state),
   barData: barData(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadTeacherData: (id) => dispatch(loadTeacherData(id)),
+  //loadTeacherData: (id) => dispatch(loadTeacherData(id)),
   changeVisualType: (visual) => dispatch(changeVisualType(visual))
 })
 
 class Teacher extends React.Component {
 
   componentDidMount() {
-    this.props.loadTeacherData(this.props.params.id)
+    //this.props.loadTeacherData(this.props.params.id)
   }
 
   render() {
-    const {loading, teacherData, visualType, tableData, barData} = this.props
+    const {loading, visualType, tableData, barData} = this.props
 
     return (<section className="teacherSection">
       <PageHeader>{this.props.params.name}</PageHeader>
       {loading && <Spinner/>}
       {
-        !loading && teacherData.stats &&
+        !loading &&
         <section>
-          <section className="statsSection">
-            <h2>Valore Minimo: {teacherData.stats.min}%</h2>
-            <h2>Valore Massimo: {teacherData.stats.max}%</h2>
-            <h2>Valore Medio: {teacherData.stats.avg.toFixed(2)}%</h2>
-          </section>
           <ButtonGroup className='selector'>
             <Button active={visualType === 'chart'}
                     onClick={() => this.props.changeVisualType('chart')}>Grafico</Button>
@@ -55,7 +50,7 @@ class Teacher extends React.Component {
           {visualType === 'table' && <BootstrapTable className='dataTable' data={tableData} hover={true}>
             <TableHeaderColumn dataField="idDomanda" isKey={true} dataAlign="center" dataSort={true}>ID
               Domanda</TableHeaderColumn>
-            <TableHeaderColumn dataField="goodVotePercentage" dataAlign="center" dataSort={true}>Valore Voti
+            <TableHeaderColumn dataField="goodVotesPercentage" dataAlign="center" dataSort={true}>Valore Voti
               Positivi</TableHeaderColumn>
             <TableHeaderColumn dataField="schoolPercentage" dataAlign="center" dataSort={true}>Media della
               Scuola</TableHeaderColumn>
