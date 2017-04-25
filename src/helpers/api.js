@@ -8,6 +8,12 @@ export const getInitialData = () => {
   ])
 }
 
+export const getTeacherData = (id) => {
+  return Promise.all([
+    fetch(`${baseApiUrl}/votazioni/docenti?idDocente=${id}`).then(res => res.json())
+  ])
+}
+
 export const normalizeData = (arr) => {
   return {
     'teachers': arr[0],

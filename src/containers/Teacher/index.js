@@ -4,7 +4,7 @@ import {PageHeader, ButtonGroup, Button} from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import {Bar} from 'react-chartjs'
 import Spinner from '../../components/Spinner'
-import {changeVisualType} from '../../actions'
+import {changeVisualType, loadTeacherData} from '../../actions'
 import {tableData, barData} from '../../selectors'
 import './teacher.scss'
 
@@ -13,20 +13,19 @@ const mapStateToProps = (state) => ({
   teacherData: state.teacherData,
   visualType: state.visualType,
   questions: state.data.questions,
-  //schoolData: state.data.goodVotes,
   tableData: tableData(state),
   barData: barData(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  //loadTeacherData: (id) => dispatch(loadTeacherData(id)),
+  loadTeacherData: (id) => dispatch(loadTeacherData(id)),
   changeVisualType: (visual) => dispatch(changeVisualType(visual))
 })
 
 class Teacher extends React.Component {
 
   componentDidMount() {
-    //this.props.loadTeacherData(this.props.params.id)
+    this.props.loadTeacherData(this.props.params.id)
   }
 
   render() {
