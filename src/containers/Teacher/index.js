@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {PageHeader, ButtonGroup, Button} from 'react-bootstrap'
+import {PageHeader, ButtonGroup, Button, Row, Col} from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import {Bar} from 'react-chartjs'
 import Spinner from '../../components/Spinner'
 import {changeVisualType, loadTeacherData} from '../../actions'
-import {tableData, barData} from '../../selectors'
+import {tableData, barData, teacherStats} from '../../selectors'
 import './teacher.scss'
 
 const mapStateToProps = (state) => ({
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => ({
   visualType: state.visualType,
   questions: state.data.questions,
   tableData: tableData(state),
-  barData: barData(state)
+  barData: barData(state),
+  teacherStats: teacherStats(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -29,14 +30,22 @@ class Teacher extends React.Component {
   }
 
   render() {
-    const {loading, visualType, tableData, barData} = this.props
+    const {loading, visualType, tableData, barData, teacherStats} = this.props
+    const {max, min, avg} = teacherStats
 
     return (<section className="teacherSection">
+
+
       <PageHeader>{this.props.params.name}</PageHeader>
       {loading && <Spinner/>}
       {
         !loading &&
         <section>
+          <Row className='stats-section'>
+            <Col md={4}><h2>Voto Massimo: {max}%</h2></Col>
+            <Col md={4}><h2>Voto Minimo: {min}%</h2></Col>
+            <Col md={4}><h2>Media Voti: {avg}%</h2></Col>
+          </Row>
           <ButtonGroup className='selector'>
             <Button active={visualType === 'chart'}
                     onClick={() => this.props.changeVisualType('chart')}>Grafico</Button>

@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect'
 import {filterTeachersByString, filterTeachersByCategory} from '../helpers/utils'
-import {getVotesPercentage} from '../helpers/analytics'
+import {getVotesPercentage, getStats} from '../helpers/analytics'
 
 const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
@@ -52,12 +52,19 @@ export const tableData = createSelector(
     return schoolData.map((item, i) => {
       return {
         idDomanda: i,
-        goodVotesPercentage: profData[i],
-        schoolPercentage: item,
-        difference: profData[i] - item
+        goodVotesPercentage: profData[i] + '%',
+        schoolPercentage: item + '%',
+        difference: profData[i] - item + '%'
       }
     })
   })
 
+export const teacherStats = createSelector(
+  teacherData,
+  (teacherData) => {
+    getVotesPercentage(teacherData.valutazione, 3)
+    const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
+    return getStats(profData)
+  })
 
 
