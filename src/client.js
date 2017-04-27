@@ -5,7 +5,6 @@ import {createStore, applyMiddleware, compose} from 'redux'
 import {Provider} from 'react-redux'
 import {combineReducers} from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import {syncHistoryWithStore, routerReducer} from 'react-router-redux'
 import devToolsEnhancer from 'remote-redux-devtools'
 import rootReducer from './reducers'
 import routes from './routes'
@@ -16,22 +15,17 @@ const enhancers = compose(applyMiddleware(thunkMiddleware), devToolsEnhancer({
   port: 8000
 }))
 
-const reducers = combineReducers({
-  ...rootReducer,
-  routing: routerReducer
-})
+const reducers = combineReducers(rootReducer)
 
 const store = createStore(
   reducers,
   enhancers
 )
 
-const history = syncHistoryWithStore(browserHistory, store)
-
 ReactDOM.render(
   <Provider store={store}>
     <Router
-      history={history}
+      history={browserHistory}
       routes={routes}
     />
   </Provider>,
