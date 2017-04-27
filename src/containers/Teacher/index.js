@@ -6,7 +6,7 @@ import {Bar} from 'react-chartjs'
 import Spinner from '../../components/Spinner'
 import {changeVisualType, loadTeacherData} from '../../actions'
 import {tableData, barData, teacherStats} from '../../selectors'
-import './teacher.scss'
+import './index.scss'
 
 const mapStateToProps = (state) => ({
   loading: state.loadingState,

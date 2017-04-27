@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router'
-import './searchResult.scss'
+import './index.scss'
 
 class SearchResult extends React.Component {
 

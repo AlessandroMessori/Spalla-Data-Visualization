@@ -7,7 +7,7 @@ import SearchResult from '../../components/SearchResult'
 import Spinner from '../../components/Spinner'
 import {filterChange, clearFilters} from '../../actions'
 import {currentTeachers} from '../../selectors'
-import './searchPage.scss'
+import './index.scss'
 
 const mapStateToProps = (state) => ({
   filters: state.filters,

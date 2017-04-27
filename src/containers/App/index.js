@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {loadInitialData} from '../../actions'
-import './app.scss'
+import './index.scss'
 
 const mapStateToProps = (state) => ({})
 

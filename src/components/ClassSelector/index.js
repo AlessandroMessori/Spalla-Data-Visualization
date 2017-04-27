@@ -1,6 +1,6 @@
 import React from 'react'
 import {FormControl} from 'react-bootstrap'
-import './classSelector.scss'
+import './index.scss'
 
 export default class ClassSelector extends React.Component {
 

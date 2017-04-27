@@ -1,6 +1,6 @@
 import React from 'react'
 import TopicSelector from '../TopicSelector/'
-import './home.scss'
+import './index.scss'
 
 const HomePage = () => {
   return (

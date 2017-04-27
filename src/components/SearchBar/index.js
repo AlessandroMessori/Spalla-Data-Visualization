@@ -1,6 +1,6 @@
 import React from 'react'
 import {FormControl} from 'react-bootstrap'
-import './searchBar.scss'
+import './index.scss'
 
 const SearchBar = (props) => {
 

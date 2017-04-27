@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router'
-import './topicSelector.scss'
+import './index.scss'
 
 const TopicSelector = (props) => {
   return (
