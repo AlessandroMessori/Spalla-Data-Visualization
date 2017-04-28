@@ -77,8 +77,8 @@ export const overViewData = createSelector(
     return votes.map((item) => {
       return {
         nomeDocente: item.nome + ' ' + item.cognome,
-        goodVotesPercentage: item.percentagesAvg + '%',
-        difference: Math.round(item.percentagesAvg - schoolAvg) + '%'
+        goodVotesPercentage: (item.percentagesAvg || 0) + '%',
+        difference: Math.round(item.percentagesAvg - schoolAvg) || 0 + '%'
       }
     })
   })
