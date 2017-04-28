@@ -8,7 +8,7 @@ const HomePage = () => {
       <h1 className='page-header'>Votazioni Docenti Liceo Ariosto Spallanzani</h1>
       <section className='topic-section row'>
         <h2 className='home-subtitle'>Che dati vuoi vedere?</h2>
-        <TopicSelector title='Domande' src='images/question.png' to='panoramica'/>
+        <TopicSelector title='Panoramica' src='images/question.png' to='panoramica'/>
         <TopicSelector title='Docenti' src='images/teacher.png' to='cerca/docenti'/>
       </section>
     </section>

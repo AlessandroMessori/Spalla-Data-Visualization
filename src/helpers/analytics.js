@@ -47,7 +47,7 @@ export const getStats = (votes) => {
   }
 }
 
-const getAvg = (arr) => {
+export const getAvg = (arr) => {
   let sum = 0
   arr.map(item => sum += item)
   return sum / arr.length
