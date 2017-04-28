@@ -18,6 +18,7 @@ export const getVotesPercentage = (votes, minVote) => {
   return percentages
 }
 
+
 export const getStats = (votes) => {
   let min = 666
   let max = -666
@@ -44,6 +45,20 @@ export const getStats = (votes) => {
     count,
     avg: (sum / count).toFixed()
   }
+}
+
+const getAvg = (arr) => {
+  let sum = 0
+  arr.map(item => sum += item)
+  return sum / arr.length
+}
+
+export const setPercentagesAverages = (votes) => {
+  votes.forEach(vote => {
+    getVotesPercentage(vote.valutazione, 3)
+    vote.percentages = vote.valutazione.map(item => item.goodVotesPercentage)
+    vote.percentagesAvg = Math.round(getAvg(vote.percentages))
+  })
 }
 
 

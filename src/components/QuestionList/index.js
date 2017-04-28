@@ -13,7 +13,7 @@ class QuestionList extends React.Component {
     let results = []
     this.props.questions.map((result, i) => {
       return results.push(<article key={result} className="panel panel-default">
-        <Link to={`domande/${i}`} className="panel-body">{result}</Link>
+        <Link to={`/domande/${i}`} className="panel-body">{result}</Link>
       </article>)
     })
     return results
