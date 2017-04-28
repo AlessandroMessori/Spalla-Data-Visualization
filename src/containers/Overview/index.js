@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {PageHeader} from 'react-bootstrap'
+import {PageHeader, Row, Col} from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import {overViewData} from '../../selectors'
+import {getStats} from '../../helpers/analytics'
 import './index.scss'
 
 const mapStateToProps = (state) => ({
@@ -16,10 +17,20 @@ class Teacher extends React.Component {
   render() {
 
     const {data} = this.props
-    console.log(data)
-    return (<section className="teacherSection">
+    const stats = getStats(data.map(item => parseInt(item.goodVotesPercentage.substr(0, item.goodVotesPercentage.length - 1), 0)))
+    const {min, max, avg} = stats
 
+    return (<section className="teacherSection">
       <PageHeader>Panoramica</PageHeader>
+
+      <Row className='stats-section'>
+        <Col md={4}><h2>Voto Massimo: {max}%</h2></Col>
+        <Col md={4}><h2>Voto Minimo: {min}%</h2></Col>
+        <Col md={4}><h2>Media Voti: {avg}%</h2></Col>
+      </Row>
+
+      <br/>
+
       <BootstrapTable className='dataTable' data={data} hover={true}>
         <TableHeaderColumn dataField="nomeDocente" isKey={true} dataAlign="center" dataSort={true}>Nome
           Docente</TableHeaderColumn>
