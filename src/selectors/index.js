@@ -29,15 +29,16 @@ export const barData = createSelector(
         {
           label: 'Voto del Docente',
           data: profData,
-          fillColor: 'blue',
+          fillColor: '#1D73AA',
           borderWidth: 1
         },
         {
           label: 'Media Scuola',
           data: schoolData,
-          fillColor: 'red',
+          fillColor: '#C44441',
           borderWidth: 1
         },
+
       ]
     })
   }
@@ -55,7 +56,7 @@ export const tableData = createSelector(
         idDomanda: i,
         goodVotesPercentage: profData[i] + '%',
         schoolPercentage: item + '%',
-        difference: profData[i] - item + '%'
+        difference: (Math.round(profData[i] - item) || 0) + '%'
       }
     })
   })

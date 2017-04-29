@@ -24,9 +24,9 @@ class Teacher extends React.Component {
       <PageHeader>Panoramica</PageHeader>
 
       <Row className='stats-section'>
-        <Col md={4}><h2>Voto Massimo: {max}%</h2></Col>
-        <Col md={4}><h2>Voto Minimo: {min}%</h2></Col>
-        <Col md={4}><h2>Media Voti: {avg}%</h2></Col>
+        <Col md={4}><h2>Media Massima: {max}%</h2></Col>
+        <Col md={4}><h2>Media Minima: {min}%</h2></Col>
+        <Col md={4}><h2>Media Scuola: {avg}%</h2></Col>
       </Row>
 
       <br/>
