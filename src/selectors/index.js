@@ -56,7 +56,7 @@ export const tableData = createSelector(
         idDomanda: i,
         goodVotesPercentage: profData[i] + '%',
         schoolPercentage: item + '%',
-        difference: (Math.round(profData[i] - item) || 0) + '%'
+        difference: (Math.round(profData[i] - item) || 0)
       }
     })
   })
@@ -79,7 +79,7 @@ export const overViewData = createSelector(
       return {
         nomeDocente: item.nome + ' ' + item.cognome,
         goodVotesPercentage: (item.percentagesAvg || 0) + '%',
-        difference: (Math.round(item.percentagesAvg - schoolAvg) || 0) + '%'
+        difference: (Math.round(item.percentagesAvg - schoolAvg) || 0)
       }
     })
   })

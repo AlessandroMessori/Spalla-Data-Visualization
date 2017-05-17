@@ -1,15 +1,14 @@
-.teacherSection {
+.overViewSection {
+
+  .stats-section{
+    padding: 2%;
+  }
+
   h2 {
     display: inline;
-    margin: 3%;
   }
 
-
-  .selector{
-    margin: 2%;
-  }
-
-  .dataTable {
+  .dataTable-overView {
     width: 60%;
     margin-left: 20%;
 
@@ -17,8 +16,8 @@
       margin-bottom: 0.5px;
     }
 
-    td {
-      min-width: 50%;
+    td,th {
+      width: 33%!important;
     }
 
   }
