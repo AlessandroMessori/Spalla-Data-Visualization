@@ -45,6 +45,41 @@ export const barData = createSelector(
   }
 )
 
+export const lineData = createSelector(
+  schoolVotes,
+  teacherData,
+  (schoolVotes, teacherData) => {
+    const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
+    getVotesPercentage(teacherData.valutazione, 4)
+    const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
+    return ({
+      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      datasets: [
+        {
+          label: 'Voto del Docente',
+          data: profData,
+          borderColor: '#1D73AA',
+          pointBackgroundColor: '#1D73AA',
+          fillColor: 'transparent',
+          fill: false,
+          showLine: false,
+          borderWidth: 1
+        },
+        {
+          label: 'Media Scuola',
+          data: schoolData,
+          borderColor: '#1D73AA',
+          pointBackgroundColor: '#1D73AA',
+          fillColor: 'transparent',
+          fill: false,
+          borderWidth: 1
+        },
+
+      ]
+    })
+  }
+)
+
 export const tableData = createSelector(
   schoolVotes,
   teacherData,
@@ -57,8 +92,8 @@ export const tableData = createSelector(
       return {
         question: questions[i],
         idDomanda: i,
-        goodVotesPercentage: profData[i] + '%',
-        schoolPercentage: item + '%',
+        goodVotesPercentage: profData[i],
+        schoolPercentage: item,
         difference: (Math.round(profData[i] - item) || 0)
       }
     })
@@ -81,7 +116,7 @@ export const overViewData = createSelector(
     return votes.map((item) => {
       return {
         nomeDocente: item.cognome + ' ' + item.nome,
-        goodVotesPercentage: (item.percentagesAvg || 0) + '%',
+        goodVotesPercentage: (item.percentagesAvg || 0) ,
         difference: (Math.round(item.percentagesAvg - schoolAvg) || 0)
       }
     })
@@ -96,7 +131,7 @@ export const generalData = createSelector(
     console.log(data)
     return data.map((item, i) => ({
         question: questions[i + 12],
-        goodVotesPercentage: (item.goodVotesPercentage || 0) + '%'
+        goodVotesPercentage: (item.goodVotesPercentage || 0)
       })
     )
   })

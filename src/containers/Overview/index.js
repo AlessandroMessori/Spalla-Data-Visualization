@@ -5,6 +5,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import {overViewData} from '../../selectors'
 import Spinner from '../../components/Spinner'
 import {getStats} from '../../helpers/analytics'
+import {dataFormat} from '../../helpers/utils'
 import './index.scss'
 
 const mapStateToProps = (state) => ({
@@ -18,7 +19,7 @@ class Teacher extends React.Component {
   render() {
 
     const {data} = this.props
-    const stats = getStats(data.map(item => parseInt(item.goodVotesPercentage.substr(0, item.goodVotesPercentage.length - 1), 0)))
+    const stats = getStats(data.map(item => item.goodVotesPercentage))
     const {min, max, avg} = stats
     const {length} = data
 
@@ -39,9 +40,11 @@ class Teacher extends React.Component {
         <BootstrapTable className='dataTable-overView' data={data} hover={true}>
           <TableHeaderColumn dataField="nomeDocente" isKey={true} dataAlign="center" dataSort={true}>Nome
             Docente</TableHeaderColumn>
-          <TableHeaderColumn dataField="goodVotesPercentage" dataAlign="center" dataSort={true}>Valore Voti
+          <TableHeaderColumn dataField="goodVotesPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Valore
+            Voti
             Positivi</TableHeaderColumn>
-          <TableHeaderColumn dataField="difference" dataAlign="center" dataSort={true}>Delta Docente
+          <TableHeaderColumn dataField="difference" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Delta
+            Docente
             Scuola</TableHeaderColumn>
         </BootstrapTable>
       </section>
