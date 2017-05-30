@@ -2,6 +2,7 @@ import {createSelector} from 'reselect'
 import {filterTeachersByString, filterTeachersByCategory} from '../helpers/utils'
 import {getVotesPercentage, getStats, getAvg} from '../helpers/analytics'
 
+const questions = (state) => state.data.questions
 const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
 const cls = (state) => state.filters.cls
@@ -47,12 +48,14 @@ export const barData = createSelector(
 export const tableData = createSelector(
   schoolVotes,
   teacherData,
-  (schoolVotes, teacherData) => {
+  questions,
+  (schoolVotes, teacherData, questions) => {
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
     getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return schoolData.map((item, i) => {
       return {
+        question: questions[i],
         idDomanda: i,
         goodVotesPercentage: profData[i] + '%',
         schoolPercentage: item + '%',
@@ -77,7 +80,7 @@ export const overViewData = createSelector(
     votes.shift()
     return votes.map((item) => {
       return {
-        nomeDocente: item.nome + ' ' + item.cognome,
+        nomeDocente: item.cognome + ' ' + item.nome,
         goodVotesPercentage: (item.percentagesAvg || 0) + '%',
         difference: (Math.round(item.percentagesAvg - schoolAvg) || 0)
       }

@@ -56,8 +56,7 @@ class Teacher extends React.Component {
         {visualType === 'chart' &&
         <Bar data={barData} width='700' height='400'/>}
         {visualType === 'table' && <BootstrapTable className='dataTable' data={tableData} hover={true}>
-          <TableHeaderColumn dataField="idDomanda" isKey={true} dataAlign="center" dataSort={true}>ID
-            Domanda</TableHeaderColumn>
+          <TableHeaderColumn dataField="question" isKey={true} dataAlign="center" dataSort={true}>Domanda</TableHeaderColumn>
           <TableHeaderColumn dataField="goodVotesPercentage" dataAlign="center" dataSort={true}>Valore Voti
             Positivi</TableHeaderColumn>
           <TableHeaderColumn dataField="schoolPercentage" dataAlign="center" dataSort={true}>Media della
