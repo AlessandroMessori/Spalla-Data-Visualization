@@ -20,7 +20,7 @@ export const getTeacherData = (id) => {
 export const normalizeData = (arr) => {
   return {
     'teachers': arr[0],
-    'questions': arr[1].map(item => item.testo).splice(0, 12),
+    'questions': arr[1].map(item => item.testo),
     'schoolVotes': arr[2],
     'votes': (() => {
       setPercentagesAverages(arr[3]);

@@ -86,3 +86,18 @@ export const overViewData = createSelector(
       }
     })
   })
+
+export const generalData = createSelector(
+  schoolVotes,
+  questions,
+  (schoolVotes, questions) => {
+    const data = schoolVotes.slice(11)
+    data.shift()
+    console.log(data)
+    return data.map((item, i) => ({
+        question: questions[i + 12],
+        goodVotesPercentage: (item.goodVotesPercentage || 0) + '%'
+      })
+    )
+  })
+

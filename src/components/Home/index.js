@@ -10,6 +10,7 @@ const HomePage = () => {
         <h2 className='home-subtitle'>Che dati vuoi vedere?</h2>
         <TopicSelector title='Panoramica' src='images/overview.ico' to='panoramica'/>
         <TopicSelector title='Docenti' src='images/teacher.png' to='cerca/docenti'/>
+        <TopicSelector title='Domande Generali' src='images/question.png' to='generali'/>
       </section>
     </section>
   )

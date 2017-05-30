@@ -1,0 +1,24 @@
+.overViewSection {
+
+  .stats-section{
+    padding: 2%;
+  }
+
+  h2 {
+    display: inline;
+  }
+
+  .dataTable-overView {
+    width: 60%;
+    margin-left: 20%;
+
+    table {
+      margin-bottom: 0.5px;
+    }
+
+    td,th {
+      width: 33%!important;
+    }
+
+  }
+}
