@@ -55,7 +55,7 @@ export const getAvg = (arr) => {
 
 export const setPercentagesAverages = (votes) => {
   votes.forEach(vote => {
-    getVotesPercentage(vote.valutazione, 3)
+    getVotesPercentage(vote.valutazione, 4)
     vote.percentages = vote.valutazione.map(item => item.goodVotesPercentage)
     vote.percentagesAvg = Math.round(getAvg(vote.percentages))
   })

@@ -42,7 +42,7 @@ export const loadInitialData = () => (dispatch) => {
   return getInitialData()
     .then(res => {
       const data = normalizeData(res)
-      getVotesPercentage(data.schoolVotes, 3)
+      getVotesPercentage(data.schoolVotes, 4)
       dispatch(receiveInitialData(data))
       dispatch(setLoadingState(false))
     })

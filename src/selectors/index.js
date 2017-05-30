@@ -21,7 +21,7 @@ export const barData = createSelector(
   teacherData,
   (schoolVotes, teacherData) => {
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
-    getVotesPercentage(teacherData.valutazione, 3)
+    getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return ({
       labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
@@ -49,7 +49,7 @@ export const tableData = createSelector(
   teacherData,
   (schoolVotes, teacherData) => {
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
-    getVotesPercentage(teacherData.valutazione, 3)
+    getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return schoolData.map((item, i) => {
       return {
@@ -64,7 +64,7 @@ export const tableData = createSelector(
 export const teacherStats = createSelector(
   teacherData,
   (teacherData) => {
-    getVotesPercentage(teacherData.valutazione, 3)
+    getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return getStats(profData)
   })
