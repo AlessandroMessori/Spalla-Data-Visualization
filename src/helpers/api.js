@@ -20,7 +20,7 @@ export const getTeacherData = (id) => {
 export const normalizeData = (arr) => {
   return {
     'teachers': arr[0],
-    'questions': arr[1].map(item => item.testo),
+    'questions': arr[1].sort((el1, el2) => (el1.id - el2.id)).map(item => item.testo),
     'schoolVotes': arr[2],
     'votes': (() => {
       setPercentagesAverages(arr[3]);

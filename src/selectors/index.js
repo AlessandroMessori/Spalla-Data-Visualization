@@ -116,7 +116,7 @@ export const overViewData = createSelector(
     return votes.map((item) => {
       return {
         nomeDocente: item.cognome + ' ' + item.nome,
-        goodVotesPercentage: (item.percentagesAvg || 0) ,
+        goodVotesPercentage: (item.percentagesAvg || 0),
         difference: (Math.round(item.percentagesAvg - schoolAvg) || 0)
       }
     })
@@ -126,13 +126,14 @@ export const generalData = createSelector(
   schoolVotes,
   questions,
   (schoolVotes, questions) => {
-    const data = schoolVotes.slice(11)
-    data.shift()
-    console.log(data)
+    const data = schoolVotes.slice(12)
+    const generalQuestions = questions.slice(12)
+
     return data.map((item, i) => ({
-        question: questions[i + 12],
-        goodVotesPercentage: (item.goodVotesPercentage || 0)
+        question: generalQuestions[i],
+        goodVotesPercentage: (data[i].goodVotesPercentage || 0)
       })
     )
+
   })
 
