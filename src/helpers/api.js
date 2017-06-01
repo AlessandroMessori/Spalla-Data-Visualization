@@ -1,6 +1,6 @@
 import {setPercentagesAverages} from './analytics'
 
-export const baseApiUrl = 'http://localhost:4040'
+export const baseApiUrl = 'http://192.168.6.195:4040'
 
 export const getInitialData = () => {
   return Promise.all([

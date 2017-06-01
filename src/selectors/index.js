@@ -1,6 +1,6 @@
-import {createSelector} from 'reselect'
-import {filterTeachersByString, filterTeachersByCategory} from '../helpers/utils'
-import {getVotesPercentage, getStats, getAvg} from '../helpers/analytics'
+import { createSelector } from 'reselect'
+import { filterTeachersByString, filterTeachersByCategory } from '../helpers/utils'
+import { getVotesPercentage, getStats, getAvg } from '../helpers/analytics'
 
 const questions = (state) => state.data.questions
 const teachers = (state) => state.data.teachers
@@ -49,33 +49,48 @@ export const lineData = createSelector(
   schoolVotes,
   teacherData,
   (schoolVotes, teacherData) => {
+
+    if (teacherData.valutazione.length > 0) {
+      teacherData.valutazione.map(valutazione => {
+        const { countVal } = valutazione
+        for (var i = 1; i <= 5; i++) {
+          let temp = true
+          countVal.map(val => {
+            if (val.value !== i && countVal.length < 5 && temp) {
+              valutazione.countVal.push({ value: i, count: 0 })
+              temp = false
+            }
+          })
+        }
+        countVal.sort((item1, item2) => item1.value > item2.value)
+      })
+      console.log(teacherData.valutazione[0].countVal)
+    }
+
+    
+
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
+    const firstQuestion = teacherData.valutazione.length > 0 ? teacherData.valutazione[11].countVal.map(item => item.count) : []
+
     getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return ({
-      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-      datasets: [
-        {
-          label: 'Voto del Docente',
-          data: profData,
-          borderColor: '#1D73AA',
-          pointBackgroundColor: '#1D73AA',
-          fillColor: 'transparent',
-          fill: false,
-          showLine: false,
-          borderWidth: 1
-        },
-        {
-          label: 'Media Scuola',
-          data: schoolData,
-          borderColor: '#1D73AA',
-          pointBackgroundColor: '#1D73AA',
-          fillColor: 'transparent',
-          fill: false,
-          borderWidth: 1
-        },
-
-      ]
+      datasets: {
+        labels: ["1", "2", "3", "4", "5"],
+        datasets: [
+          {
+            label: 'Voto del Docente',
+            data: firstQuestion,
+            borderColor: '#1D73AA',
+            pointBackgroundColor: '#1D73AA',
+            fillColor: '#99ff99',
+            fill: false,
+            showLine: false,
+            borderWidth: 1
+          }
+        ]
+      },
+      valutazioni: firstQuestion
     })
   }
 )
@@ -130,9 +145,9 @@ export const generalData = createSelector(
     const generalQuestions = questions.slice(12)
 
     return data.map((item, i) => ({
-        question: generalQuestions[i],
-        goodVotesPercentage: (data[i].goodVotesPercentage || 0)
-      })
+      question: generalQuestions[i],
+      goodVotesPercentage: (data[i].goodVotesPercentage || 0)
+    })
     )
 
   })

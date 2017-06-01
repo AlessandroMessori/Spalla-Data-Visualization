@@ -60,7 +60,7 @@ class Teacher extends React.Component {
         {visualType === 'bar' &&
         <Bar data={barData} width='700' height='400'/>}
         {visualType === 'line' &&
-        <Line data={lineData} width='700' height='400'/>}
+        <Line data={lineData.datasets} width='700' height='400'/>}
         {visualType === 'table' && <BootstrapTable className='dataTable' data={tableData} hover={true}>
           <TableHeaderColumn dataField="question" isKey={true} dataAlign="center"
                              dataSort={true}>Domanda</TableHeaderColumn>
