@@ -1,4 +1,4 @@
-const filters = (state = {search: '', cls: ''}, action) => {
+const filters = (state = { search: '', cls: '' }, action) => {
   switch (action.type) {
     case 'FILTER_CHANGE':
       const change = {}
@@ -8,7 +8,19 @@ const filters = (state = {search: '', cls: ''}, action) => {
         ...change
       }
     case 'CLEAR_FILTERS':
-      return {search: '', cls: ''}
+      return { search: '', cls: '' }
+    default:
+      return state
+  }
+}
+
+const currentQuestion = (state = 0, action) => {
+  switch (action.type) {
+    case 'QUESTION_CHANGE':
+      let temp = action.inc ? state + 1 : state - 1
+      temp = state < 0 ? 11 : state
+      temp = state > 11 ? 0 : state
+      return temp
     default:
       return state
   }
@@ -32,7 +44,7 @@ const loadingState = (state = false, action) => {
   }
 }
 
-const data = (state = {teachers: [], cls: [], questions: []}, action) => {
+const data = (state = { teachers: [], cls: [], questions: [] }, action) => {
   switch (action.type) {
     case 'RECEIVE_INITIAL_DATA':
       return action.data
@@ -41,7 +53,7 @@ const data = (state = {teachers: [], cls: [], questions: []}, action) => {
   }
 }
 
-const teacherData = (state = {valutazione: []}, action) => {
+const teacherData = (state = { valutazione: [] }, action) => {
   switch (action.type) {
     case 'RECEIVE_TEACHER_DATA':
       return action.data
@@ -55,7 +67,8 @@ const rootReducer = {
   filters,
   loadingState,
   visualType,
-  teacherData
+  teacherData,
+  currentQuestion
 }
 
 export default rootReducer

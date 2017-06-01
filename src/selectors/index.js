@@ -10,6 +10,8 @@ const schoolVotes = (state) => state.data.schoolVotes || []
 const teacherData = (state) => state.teacherData
 const votes = (state) => state.data.votes || []
 
+export const currentQuestion = (state) => state.currentQuestion
+
 export const currentTeachers = createSelector(
   teachers,
   search,
@@ -48,7 +50,8 @@ export const barData = createSelector(
 export const lineData = createSelector(
   schoolVotes,
   teacherData,
-  (schoolVotes, teacherData) => {
+  currentQuestion,
+  (schoolVotes, teacherData, currentQuestion) => {
 
     if (teacherData.valutazione.length > 0) {
       teacherData.valutazione.map(valutazione => {
@@ -64,13 +67,12 @@ export const lineData = createSelector(
         }
         countVal.sort((item1, item2) => item1.value > item2.value)
       })
-      console.log(teacherData.valutazione[0].countVal)
     }
 
     
 
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
-    const firstQuestion = teacherData.valutazione.length > 0 ? teacherData.valutazione[11].countVal.map(item => item.count) : []
+    const firstQuestion = teacherData.valutazione.length > 0 ? teacherData.valutazione[1].countVal.map(item => item.count) : []
 
     getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
