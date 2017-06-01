@@ -2,6 +2,7 @@ import {createSelector} from 'reselect'
 import {filterTeachersByString, filterTeachersByCategory} from '../helpers/utils'
 import {getVotesPercentage, getStats, getAvg} from '../helpers/analytics'
 
+const location = () => window.location.pathname.split('/').pop()
 const questions = (state) => state.data.questions
 const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
@@ -138,9 +139,13 @@ export const overViewData = createSelector(
 export const generalData = createSelector(
   schoolVotes,
   questions,
-  (schoolVotes, questions) => {
-    const data = schoolVotes.slice(12)
-    const generalQuestions = questions.slice(12)
+  location,
+  (schoolVotes = [], questions = [], location) => {
+    let data = schoolVotes.slice(12)
+    let generalQuestions = questions.slice(12)
+
+    data = location === 'docenti' ? schoolVotes.slice(0, 11) : data
+    generalQuestions = location === 'docenti' ? questions.slice(0, 11) : generalQuestions
 
     return data.map((item, i) => ({
         question: generalQuestions[i],

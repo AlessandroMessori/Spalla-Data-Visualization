@@ -14,7 +14,7 @@ const routes = (
     <Route path='/cerca/:type' component={Search}/>
     <Route path='/docenti/:id/:name' component={Teacher}/>
     <Route path='/panoramica' component={OverView}/>
-    <Route path='/generali' component={General}/>
+    <Route path='/domande/:type' component={General}/>
     <Route path='*' component={NotFound}/>
   </Route>
 )
