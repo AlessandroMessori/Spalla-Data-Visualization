@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect'
-import { filterTeachersByString, filterTeachersByCategory } from '../helpers/utils'
-import { getVotesPercentage, getStats, getAvg } from '../helpers/analytics'
+import {createSelector} from 'reselect'
+import {filterTeachersByString, filterTeachersByCategory} from '../helpers/utils'
+import {getVotesPercentage, getStats, getAvg} from '../helpers/analytics'
 
 const questions = (state) => state.data.questions
 const teachers = (state) => state.data.teachers
@@ -54,13 +54,13 @@ export const lineData = createSelector(
   (schoolVotes, teacherData, currentQuestion) => {
 
     if (teacherData.valutazione.length > 0) {
-      teacherData.valutazione.map(valutazione => {
-        const { countVal } = valutazione
-        for (var i = 1; i <= 5; i++) {
+      teacherData.valutazione.forEach(valutazione => {
+        const {countVal} = valutazione
+        for (let i = 1; i <= 5; i++) {
           let temp = true
-          countVal.map(val => {
+          countVal.forEach(val => {
             if (val.value !== i && countVal.length < 5 && temp) {
-              valutazione.countVal.push({ value: i, count: 0 })
+              valutazione.countVal.push({value: i, count: 0})
               temp = false
             }
           })
@@ -69,13 +69,9 @@ export const lineData = createSelector(
       })
     }
 
-    
-
-    const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
-    const firstQuestion = teacherData.valutazione.length > 0 ? teacherData.valutazione[1].countVal.map(item => item.count) : []
+    const firstQuestion = teacherData.valutazione.length > 0 ? teacherData.valutazione[currentQuestion].countVal.map(item => item.count) : []
 
     getVotesPercentage(teacherData.valutazione, 4)
-    const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return ({
       datasets: {
         labels: ["1", "2", "3", "4", "5"],
@@ -147,9 +143,9 @@ export const generalData = createSelector(
     const generalQuestions = questions.slice(12)
 
     return data.map((item, i) => ({
-      question: generalQuestions[i],
-      goodVotesPercentage: (data[i].goodVotesPercentage || 0)
-    })
+        question: generalQuestions[i],
+        goodVotesPercentage: (data[i].goodVotesPercentage || 0)
+      })
     )
 
   })
