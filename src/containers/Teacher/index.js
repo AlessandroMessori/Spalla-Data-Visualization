@@ -29,9 +29,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 class Teacher extends React.Component {
 
-  componentDidMount() {
-    this.props.loadTeacherData(this.props.params.id)
-  }
 
   render() {
     const {visualType, tableData, barData, lineData, teacherStats, questionChange, currentQuestion} = this.props

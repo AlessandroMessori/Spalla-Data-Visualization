@@ -8,7 +8,11 @@ const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
 const cls = (state) => state.filters.cls
 const schoolVotes = (state) => state.data.schoolVotes || []
-const teacherData = (state) => state.teacherData
+const teacherData = (state) => {
+  const id = parseInt(window.location.pathname.split('/').splice(2, 1)[0], 0)
+  const data = state.data.votes ? state.data.votes[id] : []
+  return data.valutazione ? data : {valutazione: []}
+}
 const votes = (state) => state.data.votes || []
 
 export const currentQuestion = (state) => state.currentQuestion
