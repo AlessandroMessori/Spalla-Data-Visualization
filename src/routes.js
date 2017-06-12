@@ -12,7 +12,7 @@ const routes = (
   <Route path='/' component={App}>
     <IndexRoute component={Home}/>
     <Route path='/cerca/:type' component={Search}/>
-    <Route path='/docenti/:id/:name' component={Teacher}/>
+    <Route path='/docenti/:id/:name/:type' component={Teacher}/>
     <Route path='/panoramica' component={OverView}/>
     <Route path='/domande/:type' component={General}/>
     <Route path='*' component={NotFound}/>

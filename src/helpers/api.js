@@ -8,6 +8,10 @@ export const getInitialData = () => {
     fetch(`${baseApiUrl}/domande`).then(res => res.json()),
     fetch(`${baseApiUrl}/votazioni/scuola`).then(res => res.json()),
     fetch(`${baseApiUrl}/votazioni/docenti`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/letteratura`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/scientifico`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/lingue`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/altro`).then(res => res.json()),
   ])
 }
 
@@ -25,6 +29,10 @@ export const normalizeData = (arr) => {
     'votes': (() => {
       setPercentagesAverages(arr[3]);
       return arr[3]
-    })()
+    })(),
+    'literatureVotes': arr[4],
+    'scientificVotes': arr[5],
+    'languagesVotes': arr[6],
+    'otherVotes': arr[7],
   }
 }

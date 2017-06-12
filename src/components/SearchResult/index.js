@@ -14,7 +14,7 @@ class SearchResult extends React.Component {
     this.props.results.map(result => {
       const name = `${result.nome} ${result.cognome}`
       return results.push(<article key={name} className="panel panel-default">
-        <Link to={`/docenti/${result.id}/${name}`} className="panel-body">{name}</Link>
+        <Link to={`/docenti/${result.id}/${name}/${result.tipo_materia}`} className="panel-body">{name}</Link>
       </article>)
     })
     return results

@@ -16,3 +16,19 @@ export const filterTeachersByString = (arr, string) => {
 export const dataFormat = (cell) => (<p>{cell}%</p>)
 
 export const filterTeachersByCategory = (arr, category) => arr.filter(item => item.tipo_materia === category)
+
+export const getCategoryByParam = (param) => {
+
+  switch (param) {
+    case 'Materia%20Scientifica':
+      return 'scientific'
+    case 'Letteratura':
+      return 'literature'
+    case 'Lingua':
+      return 'languages'
+    case 'Altro':
+      return 'other'
+    default:
+      return null
+  }
+}

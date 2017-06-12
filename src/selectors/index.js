@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect'
-import {filterTeachersByString, filterTeachersByCategory} from '../helpers/utils'
+import {filterTeachersByString, filterTeachersByCategory, getCategoryByParam} from '../helpers/utils'
 import {getVotesPercentage, getStats, getAvg} from '../helpers/analytics'
 
 const location = () => window.location.pathname.split('/').pop()
@@ -8,6 +8,12 @@ const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
 const cls = (state) => state.filters.cls
 const schoolVotes = (state) => state.data.schoolVotes || []
+const categoryVotes = (state) => ({
+  'literatureVotes': state.data.literatureVotes,
+  'scientificVotes': state.data.scientificVotes,
+  'languagesVotes': state.data.languagesVotes,
+  'otherVotes': state.data.otherVotes
+})
 const teacherData = (state) => {
   const id = parseInt(window.location.pathname.split('/').splice(2, 1)[0], 0)
   const data = state.data.votes ? state.data.votes[id] : []
@@ -100,10 +106,13 @@ export const lineData = createSelector(
 
 export const tableData = createSelector(
   schoolVotes,
+  categoryVotes,
   teacherData,
   questions,
-  (schoolVotes, teacherData, questions) => {
+  (schoolVotes, categoryVotes, teacherData, questions) => {
+    const category = getCategoryByParam(window.location.pathname.split('/').pop())
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
+    const categoryData = categoryVotes[`${category}Votes`] ? categoryVotes[`${category}Votes`].map(item => item.goodVotesPercentage).slice(0, 12) : []
     getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return schoolData.map((item, i) => {
@@ -111,7 +120,9 @@ export const tableData = createSelector(
         question: questions[i],
         idDomanda: i,
         goodVotesPercentage: profData[i],
+        categoryPercentage: categoryData[i],
         schoolPercentage: item,
+        categoryDifference: (Math.round(profData[i] - categoryData[i]) || 0),
         difference: (Math.round(profData[i] - item) || 0)
       }
     })

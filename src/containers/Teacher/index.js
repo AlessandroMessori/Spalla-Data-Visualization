@@ -74,12 +74,13 @@ class Teacher extends React.Component {
         {visualType === 'table' && <BootstrapTable className='dataTable' data={tableData} hover={true}>
           <TableHeaderColumn dataField="question" isKey={true} dataAlign="center"
                              dataSort={true}>Domanda</TableHeaderColumn>
-          <TableHeaderColumn dataField="goodVotesPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Valore
+          <TableHeaderColumn dataField="goodVotesPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>
             Voti
             Positivi</TableHeaderColumn>
+          <TableHeaderColumn dataField="categoryPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Media
+            Categoria</TableHeaderColumn>
           <TableHeaderColumn dataField="schoolPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Media
-            della
-            Scuola</TableHeaderColumn>
+            della Scuola</TableHeaderColumn>
           <TableHeaderColumn dataField="difference" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Delta
             Docente
             Scuola</TableHeaderColumn>
