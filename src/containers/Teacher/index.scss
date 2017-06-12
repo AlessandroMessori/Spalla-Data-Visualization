@@ -41,5 +41,35 @@
       font-size: 18px;
       margin: 1% 7%;
     }
+
+    @media (min-width: 900px) and (max-width: 1024px) {
+
+      .incButton {
+        top: 30%;
+      }
+
+      .left {
+        left: 2%;
+      }
+
+      .right  {
+        right: 2%;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 900px) {
+
+      .incButton {
+        top: 40%;
+      }
+
+      .left {
+        left: 0;
+      }
+
+      .right  {
+        right: 0;
+      }
+    }
   }
 }

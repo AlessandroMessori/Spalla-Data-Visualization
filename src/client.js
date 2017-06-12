@@ -10,7 +10,14 @@ import rootReducer from './reducers'
 import routes from './routes'
 import './shared/scss/base.scss'
 
-const enhancers = compose(applyMiddleware(thunkMiddleware), devToolsEnhancer({
+const logger = store => next => action => {
+  let result = next(action)
+  console.log(action.type)
+  //console.log('next state', store.getState())
+  return result
+}
+
+const enhancers = compose(applyMiddleware(thunkMiddleware, logger), devToolsEnhancer({
   hostname: 'localhost',
   port: 8000
 }))

@@ -29,9 +29,9 @@ class General extends React.Component {
       <section>
 
         <Row className='stats-section'>
-          <Col md={4}><h2>Media Massima: {max}%</h2></Col>
-          <Col md={4}><h2>Media Minima: {min}%</h2></Col>
-          <Col md={4}><h2>Media Scuola: {avg}%</h2></Col>
+          <Col sm={4}><h2>Media Max: {max}%</h2></Col>
+          <Col sm={4}><h2>Media Min: {min}%</h2></Col>
+          <Col sm={4}><h2>Media Scuola: {avg}%</h2></Col>
         </Row>
 
         <br/>
