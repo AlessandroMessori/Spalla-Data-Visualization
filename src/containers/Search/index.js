@@ -42,8 +42,6 @@ class Search extends React.Component {
           {location === 'docenti' && <section>
             <SearchBar value={filters.search}
                        onChange={(event) => filterChange(event.target.value, 'search')}/>
-            <ClassSelector options={categories} value={filters.cls}
-                           onChange={(event) => filterChange(event.target.value, 'cls')}/>
             <Button onClick={clearFilters}>Pulisci Filtri
             </Button>
           </section>

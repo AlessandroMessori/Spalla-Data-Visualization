@@ -15,7 +15,8 @@ const categoryVotes = (state) => ({
   'otherVotes': state.data.otherVotes
 })
 const teacherData = (state) => {
-  const id = parseInt(window.location.href.split('/').splice(5, 1), 0)
+  const url = window.location.href.split('#')[1].split('/')
+  const id = parseInt(url.splice(2, 1), 0)
   const data = state.data.votes ? state.data.votes[id] : []
   if (data) return data.valutazione ? data : {valutazione: []}
 }

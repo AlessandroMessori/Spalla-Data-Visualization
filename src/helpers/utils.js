@@ -20,7 +20,7 @@ export const filterTeachersByCategory = (arr, category) => arr.filter(item => it
 export const getCategoryByParam = (param) => {
 
   switch (param) {
-    case 'Materia%20Scientifica':
+    case 'Materia Scientifica':
       return 'scientific'
     case 'Letteratura':
       return 'literature'
