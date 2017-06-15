@@ -2,7 +2,7 @@ import {createSelector} from 'reselect'
 import {filterTeachersByString, filterTeachersByCategory, getCategoryByParam} from '../helpers/utils'
 import {getVotesPercentage, getStats, getAvg} from '../helpers/analytics'
 
-const location = () => window.location.pathname.split('/').pop()
+const location = () => window.location.href.split('/').pop()
 const questions = (state) => state.data.questions
 const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
@@ -15,9 +15,9 @@ const categoryVotes = (state) => ({
   'otherVotes': state.data.otherVotes
 })
 const teacherData = (state) => {
-  const id = parseInt(window.location.pathname.split('/').splice(2, 1)[0], 0)
+  const id = parseInt(window.location.href.split('/').splice(5, 1), 0)
   const data = state.data.votes ? state.data.votes[id] : []
-  return data.valutazione ? data : {valutazione: []}
+  if (data) return data.valutazione ? data : {valutazione: []}
 }
 const votes = (state) => state.data.votes || []
 
@@ -110,7 +110,7 @@ export const tableData = createSelector(
   teacherData,
   questions,
   (schoolVotes, categoryVotes, teacherData, questions) => {
-    const category = getCategoryByParam(window.location.pathname.split('/').pop())
+    const category = getCategoryByParam(window.location.href.split('/').pop())
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
     const categoryData = categoryVotes[`${category}Votes`] ? categoryVotes[`${category}Votes`].map(item => item.goodVotesPercentage).slice(0, 12) : []
     getVotesPercentage(teacherData.valutazione, 4)

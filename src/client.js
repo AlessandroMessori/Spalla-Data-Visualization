@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Router, browserHistory} from 'react-router'
+import {Router, hashHistory} from 'react-router'
 import {createStore, applyMiddleware, compose} from 'redux'
 import {Provider} from 'react-redux'
 import {combineReducers} from 'redux'
@@ -26,7 +26,7 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <Router
-      history={browserHistory}
+      history={hashHistory}
       routes={routes}
     />
   </Provider>,
