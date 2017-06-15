@@ -1,6 +1,6 @@
 import {getInitialData, getTeacherData, normalizeData} from '../helpers/api'
 import {getVotesPercentage} from '../helpers/analytics'
-
+import store from '../helpers/store'
 //filter actions
 export const filterChange = (value, source) => ({
   type: 'FILTER_CHANGE',
@@ -43,9 +43,9 @@ export const receiveTeacherData = (data) => ({
 //api thunks
 export const loadInitialData = () => (dispatch) => {
 
-  const storeData = localStorage.getItem('redux-store')
+  const storeData = store
 
-  if (storeData) return dispatch(receiveInitialData(JSON.parse(storeData)))
+  if (storeData) return dispatch(receiveInitialData(storeData))
 
   dispatch(setLoadingState(true))
   dispatch(receiveInitialData([]))
