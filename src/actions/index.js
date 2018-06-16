@@ -1,14 +1,7 @@
 import {getInitialData, getTeacherData, normalizeData} from '../helpers/api'
 import {getVotesPercentage} from '../helpers/analytics'
+import  store from '../helpers/store'
 
-let store = null
-
-try {
-  store = require('../helpers/store')
-}
-catch (e) {
-
-}
 //filter actions
 export const filterChange = (value, source) => ({
   type: 'FILTER_CHANGE',

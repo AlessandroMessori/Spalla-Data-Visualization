@@ -4,10 +4,12 @@ process.env.NODE_ENV = 'development';
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 
+var fs = require('fs')
 var chalk = require('chalk');
 var webpack = require('webpack');
+var fetch = require('node-fetch');
 var WebpackDevServer = require('webpack-dev-server');
 var historyApiFallback = require('connect-history-api-fallback');
 var httpProxyMiddleware = require('http-proxy-middleware');
@@ -21,6 +23,7 @@ var prompt = require('react-dev-utils/prompt');
 var pathExists = require('path-exists');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var path = require("path")
 
 var useYarn = pathExists.sync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
@@ -49,6 +52,92 @@ if (isSmokeTest) {
   };
 }
 
+const baseApiUrl = 'http://localhost:4040'
+
+const getInitialData = () => {
+  return Promise.all([
+    fetch(`${baseApiUrl}/docenti`).then(res => res.json()),
+    fetch(`${baseApiUrl}/domande`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/docenti`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/letteratura`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/scientifico`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/lingue`).then(res => res.json()),
+    fetch(`${baseApiUrl}/votazioni/scuola/tipologiaMateria/altro`).then(res => res.json()),
+  ])
+}
+
+const getAvg = (arr) => {
+  let sum = 0
+  arr.map(item => sum += item)
+  return sum / arr.length
+}
+
+const getVotesPercentage = (votes, minVote) => {
+
+  let percentages = []
+
+  votes.length > 0 && votes.map((question, i) => {
+
+    percentages.push({ goodVotesCount: 0 })
+
+    question.countVal.map(item => {
+      const { value, count } = item
+      if (value >= minVote) percentages[i].goodVotesCount += count
+      return null
+    })
+
+    return question.goodVotesPercentage = Math.round(percentages[i].goodVotesCount * 100 / question.countTot)
+  })
+
+  return percentages
+}
+
+const setPercentagesAverages = (votes) => {
+  votes.length > 0 && votes.forEach(vote => {
+    getVotesPercentage(vote.valutazione, 4)
+    vote.percentages = vote.valutazione.map(item => item.goodVotesPercentage)
+    vote.percentagesAvg = Math.round(getAvg(vote.percentages))
+  })
+}
+
+const normalizeData = (arr) => {
+  return {
+    'teachers': arr[0],
+    'questions': arr[1].sort((el1, el2) => (el1.id - el2.id)).map(item => item.testo),
+    'schoolVotes': arr[2],
+    'votes': (() => {
+      setPercentagesAverages(arr[3]);
+      return arr[3]
+    })(),
+    'literatureVotes': arr[4],
+    'scientificVotes': arr[5],
+    'languagesVotes': arr[6],
+    'otherVotes': arr[7],
+  }
+}
+
+const getStore = () => {
+  return new Promise(resolve => {
+    getInitialData()
+      .then(res => {
+        const data = normalizeData(res)
+        const subjects = ['literature', 'scientific', 'languages', 'other']
+        getVotesPercentage(data.schoolVotes, 4)
+        subjects.forEach(item => getVotesPercentage(data[`${item}Votes`], 4))
+        resolve(data)
+      })
+  })
+}
+
+
+if (!fs.existsSync('../src/helpers/store.js')) {
+  getStore().then(data => fs.writeFileSync(path.join(__dirname, '../src/helpers/store.js'), "export default " + JSON.stringify(data)))
+}
+
+
+
+
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
@@ -58,7 +147,7 @@ function setupCompiler(host, port, protocol) {
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
-  compiler.plugin('invalid', function() {
+  compiler.plugin('invalid', function () {
     if (isInteractive) {
       clearConsole();
     }
@@ -69,7 +158,7 @@ function setupCompiler(host, port, protocol) {
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', function(stats) {
+  compiler.plugin('done', function (stats) {
     if (isInteractive) {
       clearConsole();
     }
@@ -127,7 +216,7 @@ function setupCompiler(host, port, protocol) {
 // We need to provide a custom onError function for httpProxyMiddleware.
 // It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
-  return function(err, req, res){
+  return function (err, req, res) {
     var host = req.headers && req.headers.host;
     console.log(
       chalk.red('Proxy error:') + ' Could not proxy request ' + chalk.cyan(req.url) +
@@ -142,7 +231,7 @@ function onProxyError(proxy) {
     // And immediately send the proper error response to the client.
     // Otherwise, the request will eventually timeout with ERR_EMPTY_RESPONSE on the client side.
     if (res.writeHead && !res.headersSent) {
-        res.writeHead(500);
+      res.writeHead(500);
     }
     res.end('Proxy error: Could not proxy request ' + req.url + ' from ' +
       host + ' to ' + proxy + ' (' + err.code + ').'
@@ -190,7 +279,7 @@ function addMiddleware(devServer) {
     var hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
       target: proxy,
       logLevel: 'silent',
-      onProxyReq: function(proxyReq, req, res) {
+      onProxyReq: function (proxyReq, req, res) {
         // Browers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
@@ -302,7 +391,7 @@ detect(DEFAULT_PORT).then(port => {
     var question =
       chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
         ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
-        '\n\nWould you like to run the app on another port instead?';
+      '\n\nWould you like to run the app on another port instead?';
 
     prompt(question, true).then(shouldChangePort => {
       if (shouldChangePort) {
