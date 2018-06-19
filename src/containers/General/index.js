@@ -23,7 +23,7 @@ class General extends React.Component {
     const {length} = data
 
     return (<section className="overViewSection">
-      <PageHeader>Domande {window.location.pathname.split('/').pop()}</PageHeader>
+      <PageHeader>Domande {window.location.href.split('/').pop()}</PageHeader>
       {length < 1 && <Spinner/>}
       {length > 0 &&
       <section>

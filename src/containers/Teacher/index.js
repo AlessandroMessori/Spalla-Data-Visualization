@@ -36,6 +36,8 @@ class Teacher extends React.Component {
     const {length} = tableData
     const questions = tableData.map(item => item.question)
 
+    //(tableData)
+
     return (<section className="teacherSection">
 
 
@@ -77,8 +79,6 @@ class Teacher extends React.Component {
           <TableHeaderColumn dataField="goodVotesPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>
             Voti
             Positivi</TableHeaderColumn>
-          <TableHeaderColumn dataField="categoryPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Media
-            Categoria</TableHeaderColumn>
           <TableHeaderColumn dataField="schoolPercentage" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Media
             della Scuola</TableHeaderColumn>
           <TableHeaderColumn dataField="difference" dataAlign="center" dataFormat={dataFormat} dataSort={true}>Delta

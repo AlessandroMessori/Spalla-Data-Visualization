@@ -53,9 +53,7 @@ export const loadInitialData = () => (dispatch) => {
   return getInitialData()
     .then(res => {
       const data = normalizeData(res)
-      const subjects = ['literature', 'scientific', 'languages', 'other']
       getVotesPercentage(data.schoolVotes, 4)
-      subjects.forEach(item => getVotesPercentage(data[`${item}Votes`], 4))
       localStorage.setItem('redux-store', JSON.stringify(data))
       dispatch(receiveInitialData(data))
       dispatch(setLoadingState(false))

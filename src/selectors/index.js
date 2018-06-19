@@ -1,6 +1,6 @@
-import {createSelector} from 'reselect'
-import {filterTeachersByString, filterTeachersByCategory, getCategoryByParam} from '../helpers/utils'
-import {getVotesPercentage, getStats, getAvg} from '../helpers/analytics'
+import { createSelector } from 'reselect'
+import { filterTeachersByString, filterTeachersByCategory, getCategoryByParam } from '../helpers/utils'
+import { getVotesPercentage, getStats, getAvg } from '../helpers/analytics'
 
 const location = () => window.location.href.split('/').pop()
 const questions = (state) => state.data.questions
@@ -8,18 +8,15 @@ const teachers = (state) => state.data.teachers
 const search = (state) => state.filters.search
 const cls = (state) => state.filters.cls
 const schoolVotes = (state) => state.data.schoolVotes || []
-const categoryVotes = (state) => ({
-  'literatureVotes': state.data.literatureVotes,
-  'scientificVotes': state.data.scientificVotes,
-  'languagesVotes': state.data.languagesVotes,
-  'otherVotes': state.data.otherVotes
-})
 const teacherData = (state) => {
   const url = window.location.href.split('#')[1].split('/')
   const id = parseInt(url.splice(2, 1), 0)
-  const data = state.data.votes ? state.data.votes[id] : []
-  if (data) return data.valutazione ? data : {valutazione: []}
+  const data = state.data.votes ? state.data.votes.filter(item => item.idDocente === id) : []
+
+  if (data && data[0]) return data[0].valutazione ? data[0] : { valutazione: [] }
+  else return { valutazione: [] }
 }
+
 const votes = (state) => state.data.votes || []
 
 export const currentQuestion = (state) => state.currentQuestion
@@ -28,7 +25,7 @@ export const currentTeachers = createSelector(
   teachers,
   search,
   cls,
-  (teachers, search, cls) => cls ? filterTeachersByCategory(filterTeachersByString(teachers, search), cls) : filterTeachersByString(teachers, search)
+  (teachers, search, cls) => filterTeachersByString(teachers, search)
 )
 
 export const barData = createSelector(
@@ -67,12 +64,12 @@ export const lineData = createSelector(
 
     if (teacherData.valutazione.length > 0) {
       teacherData.valutazione.forEach(valutazione => {
-        const {countVal} = valutazione
+        const { countVal } = valutazione
         for (let i = 1; i <= 5; i++) {
           let temp = true
           countVal.forEach(val => {
             if (val.value !== i && countVal.length < 5 && temp) {
-              valutazione.countVal.push({value: i, count: 0})
+              valutazione.countVal.push({ value: i, count: 0 })
               temp = false
             }
           })
@@ -107,13 +104,11 @@ export const lineData = createSelector(
 
 export const tableData = createSelector(
   schoolVotes,
-  categoryVotes,
   teacherData,
   questions,
-  (schoolVotes, categoryVotes, teacherData, questions) => {
-    const category = getCategoryByParam(window.location.href.split('/').pop())
+  (schoolVotes, teacherData, questions) => {
+    console.log(teacherData)
     const schoolData = schoolVotes.map(item => item.goodVotesPercentage).slice(0, 12)
-    const categoryData = categoryVotes[`${category}Votes`] ? categoryVotes[`${category}Votes`].map(item => item.goodVotesPercentage).slice(0, 12) : []
     getVotesPercentage(teacherData.valutazione, 4)
     const profData = teacherData.valutazione.map(item => item.goodVotesPercentage).slice(0, 12)
     return schoolData.map((item, i) => {
@@ -121,9 +116,7 @@ export const tableData = createSelector(
         question: questions[i],
         idDomanda: i,
         goodVotesPercentage: profData[i],
-        categoryPercentage: categoryData[i],
         schoolPercentage: item,
-        categoryDifference: (Math.round(profData[i] - categoryData[i]) || 0),
         difference: (Math.round(profData[i] - item) || 0)
       }
     })
@@ -164,9 +157,9 @@ export const generalData = createSelector(
     generalQuestions = location === 'docenti' ? questions.slice(0, 11) : generalQuestions
 
     return data.map((item, i) => ({
-        question: generalQuestions[i],
-        goodVotesPercentage: (data[i].goodVotesPercentage || 0)
-      })
+      question: generalQuestions[i],
+      goodVotesPercentage: (data[i].goodVotesPercentage || 0)
+    })
     )
 
   })
