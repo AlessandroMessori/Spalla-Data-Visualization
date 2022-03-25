@@ -35,7 +35,7 @@
     "http-proxy-middleware": "0.17.2",
     "json-loader": "0.5.4",
     "node-fetch": "^2.1.2",
-    "node-sass": "^4.3.0",
+    "node-sass": "^4.14.1",
     "object-assign": "4.1.0",
     "path": "^0.12.7",
     "path-exists": "2.1.0",

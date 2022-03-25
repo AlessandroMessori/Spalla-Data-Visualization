@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {PageHeader, Button} from 'react-bootstrap'
 import SearchBar from '../../components/SearchBar/'
-import ClassSelector from '../../components/ClassSelector/'
 import SearchResult from '../../components/SearchResult'
 import QuestionList from '../../components/QuestionList'
 import Spinner from '../../components/Spinner'
@@ -30,7 +29,7 @@ class Search extends React.Component {
     const {currentTeachers, loading, filters, data} = this.props
     const {filterChange, clearFilters} = this.props
     const {questions} = data
-    const categories = (data.teachers) ? Array.from(new Set(data.teachers.map(item => item.tipo_materia))) : []
+    //const categories = (data.teachers) ? Array.from(new Set(data.teachers.map(item => item.tipo_materia))) : []
     const location = this.props.params.type
 
     return (<section className="searchPage">

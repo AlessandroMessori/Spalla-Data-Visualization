@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { filterTeachersByString, filterTeachersByCategory, getCategoryByParam } from '../helpers/utils'
+import { filterTeachersByString} from '../helpers/utils'
 import { getVotesPercentage, getStats, getAvg } from '../helpers/analytics'
 
 const location = () => window.location.href.split('/').pop()
